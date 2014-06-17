@@ -1,0 +1,29 @@
+<div class=".col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <H1>{{m.settings.webSiteName}}</H1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+
+        <input type="text" ng-model="text" class="form-control" ng-change="getInventory(text)">
+        <span>{{data}}</span>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-6 col-md-4" ng-repeat="item in inventory">
+                    <div class="thumbnail">
+                        <img src="images/tourpro_driver_large.jpg" width="300" height="200" alt="Pro tour driver">
+                        <div class="caption">
+                            <h3>{{item.name}}</h3>
+                            <span>{{item.price}}</span>
+                            <p>This is a golf club</p>
+                            <p><a href="#" class="btn btn-primary" role="button">Rent</a> <a href="#" class="btn btn-default" role="button">Buy</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

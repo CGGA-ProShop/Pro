@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="proShop">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="shortcut icon" href="../../assets/ico/favicon.ico">-->
+    <title>CGGA Proshop</title>
+
+    <!--- Scripts ---->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="controllers/main.js"></script>
+
+    <!--- Styles ---->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+			margin: 51px auto 0 auto;
+			background: lightgray;
+        }
+
+        a {
+            cursor: pointer;
+        }
+		
+		footer {
+			border-top: 1px solid black;
+			text-align: center;
+			font-size: 10px;
+		}
+    </style>
+</head>
+<body ng-controller="main">
+    <div>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">{{m.settings.webSiteName}}</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#home">Home</a></li>
+                        <li><a href="#buy">Buy</a></li>
+                        <li><a href="#rent">Rent</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Other <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Brandon</a></li>
+                        <li><a href="#"><b class="glyphicon glyphicon-shopping-cart"></b> <span class="badge">0</span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Account Information</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container">
+			<div ng-view>
+			</div>
+			<footer>
+				A project by Steve Carroll, Brandon Couts, Garry Cronyn.<br>
+				All images, and descriptions © Original Owners, and are used for educational proposes only.<br>
+				All other content © Copyright 2013, University of Central Florida<br>
+				University of Central Florida - Managing IT Integration - CIS 4524, Summer 2014<br>
+				This is not an actual site.
+			</footer>
+        </div>
+    </div>
+</body>
+</html>

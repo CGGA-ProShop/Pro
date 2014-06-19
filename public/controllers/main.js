@@ -18,8 +18,11 @@ app.config(['$routeProvider',
             templateUrl: "partials/home.html",
             controller: "main"
         }).when('/buy', {
-            templateUrl: "partials/buy.html",
+            templateUrl: "partials/buy/buy.html",
             controller: "buy"
+        }).when('/buy/:id', {
+            templateUrl: "partials/buy/item.html",
+            controller: "buyItem"
         }).when('/rent',{
             templateUrl: "partials/rent.html",
             controller: "main"
@@ -61,6 +64,10 @@ app.controller("main",["$scope","viewModel",function(s,m){
     s.change = function(input){
         m.test = input;
     }
+
+}]);
+
+app.controller("buyItem",["$scope","viewModel","$http",function(s,m,h) {
 
 }]);
 

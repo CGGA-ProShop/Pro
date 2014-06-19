@@ -41,4 +41,4 @@ Thumbs.db
 /db/*
 /node_modules
 /node_modules/*
-/public/bower_components
+/public/components

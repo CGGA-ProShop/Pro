@@ -1,0 +1,36 @@
+{
+  "name": "ProShop",
+  "version": "0.0.1",
+  "authors": [
+    "Brandon Couts <carbondonuts@gmail.com>"
+  ],
+  "description": "ProShop website for CGGA final project",
+  "main": "app.js",
+  "keywords": [
+    "CGGA",
+    "ProShop",
+    "Golf",
+    "UCF",
+    "CIS4521",
+    "Andrew",
+    "Eisler"
+  ],
+  "license": "MIT",
+  "homepage": "couts.me/Pro",
+  "private": true,
+  "dependencies": {
+    "jquery": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "bootstrap": "latest"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test",
+    "tests",
+    "bower_components",
+    "public/components"
+  ]
+}

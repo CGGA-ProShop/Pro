@@ -26,10 +26,10 @@ As well as the final finished product. A web based IT solution to the purposed p
 
 ![Picture](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/pluggedIn-logo.png)
 
-Project: P.R.O. (Professional Retail Outlet)
-Team: PluggedIn
-Website: http://couts.me/Pro/
-Group members:
+Project: P.R.O. (Professional Retail Outlet)<br>
+Team: PluggedIn<br>
+Website: http://couts.me/Pro/<br>
+Group members:<br>
 * Steve Carroll
 * Brandon Couts - carbondonuts@hotmail.com
 * Garry Cronyn

@@ -1,3 +1,15 @@
+/**
+ * @description Checks if the variable exists
+ * @param q
+ * @returns {boolean}
+ */
+function exists(q){ return (typeof q!="undefined"&&q!=null);}
+/**
+ * @descriptionWrapper for the console.log function so that we can use it, and leave it in for development/production
+ * @param message
+ */
+function log(message){if ( window.console && window.console.log ) {console.log(message);}}
+
 var app = angular.module("proShop",['ngRoute']);
 
 app.config(['$routeProvider',
@@ -53,19 +65,59 @@ app.controller("main",["$scope","viewModel",function(s,m){
 }]);
 
 app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
+    s.view = {
+        stack: true,
+        list: false
+    };
 
     s.getInventory = function(text) {
-        h.get("http://localhost:8888/inventory/"+text)
-            .success(function (response) {
-                s.data = response;
-            })
-            .error(function () {
-            });
+        console.log(typeof text);
+        console.log(exists(text));
+        if(exists(text) && text != "") {
+            h.get("http://localhost:8888/inventory/" + text)
+                .success(function (response) {
+                    s.data = response;
+                })
+                .error(function () {
+                });
+        }
+    };
+
+    s.showView = function(type){
+        if(s.view.hasOwnProperty(type)){
+            for(var view in s.view){
+                if(s.view.hasOwnProperty(view))
+                    s.view[view] = false;
+            }
+            s.view[type] = true;
+        }
+    };
+
+    s.categories = [{name:"Clubs",members:[{name:"Iron",category:"Clubs"},{name:"Putters",Category:"Clubs"}]}];
+
+    s.clickCategory = function(category){
+        s.searchText = category.name;
+        s.getInventory(s.searchText)
     };
 
     s.m = {settings:{webSiteName:"CGGA Proshop"}};
     s.inventory = [{
         name:"Golf Club",
+        price:10
+    },{
+        name:"Shirt",
+        price:10
+    },{
+        name:"Shirt",
+        price:10
+    },{
+        name:"Shirt",
+        price:10
+    },{
+        name:"Shirt",
+        price:10
+    },{
+        name:"Shirt",
         price:10
     },{
         name:"Shirt",

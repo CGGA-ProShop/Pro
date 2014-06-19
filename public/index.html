@@ -20,10 +20,14 @@
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container {
+            width: 1000px;
 			margin: 51px auto 0 auto;
+            padding: 0;
 			background: lightgray;
         }
-
+        .view-wrapper {
+            min-height: 1000px;
+        }
         a {
             cursor: pointer;
         }
@@ -85,8 +89,7 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div class="container">
-			<div ng-view>
-			</div>
+			<div class="view-wrapper" ng-view></div>
 			<footer>
 				A project by Steve Carroll, Brandon Couts, Garry Cronyn.<br>
 				All images, and descriptions © Original Owners, and are used for educational proposes only.<br>

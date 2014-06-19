@@ -2,11 +2,18 @@ var express = require("express");
 
 var app = express();
 
+var server = {
+    port: 8080
+};
+
+
+//app.use(function(req,res,next){
+//    console.log(req);
+//    console.log(res);
+//});
+
 
 app.get("/inventory/",function(req, res){
-    var id = req.params.item;
-    console.log(id);
-    res.send(id);
 });
 
 
@@ -16,7 +23,11 @@ app.get("/inventory/:item",function(req, res){
     res.send(id);
 });
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'))
+    .use(function(){
+        console.log("here");
+    });
 
 
-app.listen(8888);
+app.listen(server.port);
+console.log("Server up and running on port: " + server.port);

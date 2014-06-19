@@ -89,7 +89,13 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
                 });
         }
     };
+    h.get()
+        .success(function(){
 
+        })
+        .error(function(){
+
+        });
     s.showView = function(type){
         if(s.view.hasOwnProperty(type)){
             for(var view in s.view){

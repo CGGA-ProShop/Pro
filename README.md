@@ -1,11 +1,10 @@
 CGGA-ProShop
 ============
-![alt text](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/pegasus-icon.png "UCF Pegasus") University of Central Florida
-
+![alt text](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/pegasus-icon.png "UCF Pegasus") University of Central Florida<br>
 Summer class CIS4524 - 2014 Andrew Eisler
 Managing IT Integration
 -------------
-Description
+<h3>Description</h3>
 The class was broken up into groups of three to four persons. Each group was assigned one of four
 areas for a case study and project development. The four areas: Tee Times, ProShop, Golf Instruction,
 Course Maintenance. Over the course of the semester, students delivered the the following documents for
@@ -29,7 +28,7 @@ As well as the final finished product. A web based IT solution to the purposed p
 Project: P.R.O. (Professional Retail Outlet)<br>
 Team: PluggedIn<br>
 Website: http://couts.me/Pro/<br>
-Group members:<br>
+Group members:
 * Steve Carroll
 * Brandon Couts - carbondonuts@hotmail.com
 * Garry Cronyn

@@ -24,14 +24,10 @@ simulated project management:
 
 As well as the final finished product. A web based IT solution to the purposed problems.
 
+![Picture](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/pluggedIn-logo.png)
 Project: P.R.O. (Professional Retail Outlet)
-
 Team: PluggedIn
-
-<image src="https://github.com/CGGA-ProShop/Pro/raw/master/public/images/pluggedIn-logo.png" style="width:200px ">
-
 Website: http://couts.me/Pro/
-
 Group members:
 * Steve Carroll
 * Brandon Couts - carbondonuts@hotmail.com

@@ -1,8 +1,7 @@
 var mongoose = require("mongoose");
 
-var inventoryScheme = mongoose.collection("inventory",{
-	name: "golf club",
-	desc: "A 9 iron"
+var ItemsSchema = mongoose.Schema({
+    name: String
 });
 
-expose.inventoryScheme = inventoryScheme;
+module.exports = ItemsSchema;

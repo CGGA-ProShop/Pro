@@ -1,13 +1,13 @@
-var mongoose = require('./../mongoose');
-var db = require('./../db');
-
 var pages = {
-    items: function(req,res){
-        var ItemSchema = mongoose.Schema({
-            name: String
+    items: function(req, res) {
+        var Items = require('./../models/items');
+        Items.find(function(err, items){
+            if(err) return console.error(err);
+            res.send(items);
         });
-        var Items = mongoose.model('items',ItemSchema);
-
+    },
+    item: function(req, res){
+        var Items = require('./../models/items');
         Items.find(function(err, items){
             if(err) return console.error(err);
             res.send(items);

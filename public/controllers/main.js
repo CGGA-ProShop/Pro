@@ -26,6 +26,15 @@ app.config(['$routeProvider',
         }).when('/rent',{
             templateUrl: "partials/rent.html",
             controller: "main"
+        }).when('/cart', {
+            templateUrl: "partials/cart.html",
+            controller: "cart"
+        }).when('/login', {
+            templateUrl: "partials/login.html",
+            controller: "login"
+        }).when('/account', {
+            templateUrl: "partials/account.html",
+            controller: "account"
         }).when('/error',{
             templateUrl: "partials/404.html",
             controller: "main"
@@ -34,36 +43,65 @@ app.config(['$routeProvider',
         });
     }]);
 
-app.service("initModel",["$http",function(h){
-    this.getItem = function(m){
-        h.get("http://localhost:8888/").success(function(data){
+app.factory("settings",[function(){
+    return {
+        host: "http://localhost",
+        port: "/",
+        fullPath: function(){return this.host+this.port;},
+        webSiteName: "CGGA",
+        projectName: "ProShop",
+        authors: [{
+                name: "Brandon Couts",
+                em: "carbondonuts@gmail.com"
+            },{
+                name: "Steve Carroll",
+                em: ""
+            },{
+                name: "Garry Cronyn",
+                em:""
+            }
+        ]
+    };
+}]);
+
+app.factory("initModel",["$http","settings",function(h,s){
+    var m = {};
+
+    m.getSettings = function(m){
+        m.settings = s;
+    };
+
+    m.getItem = function(m){
+        h.get(s.fullPath()+"inventory/").success(function(data){
             m.items = data;
         });
     };
+    return m;
 }]);
 
 
 app.factory("viewModel",["initModel",function(initModel){
-    var returnBack = {items:""};
+    var m = {
 
-    initModel.getItem(returnBack);
-
-    return {
-        settings:{
-            webSiteName:"CGGA"
-        },
-        items: returnBack.items
     };
+    initModel.getSettings(m);
+    initModel.getItem(m);
+
+    return m;
 }]);
 
 
 app.controller("main",["$scope","viewModel",function(s,m){
     s.m = m;
-    m.test = "Hello steve";
 
     s.change = function(input){
         m.test = input;
     }
+
+}]);
+
+app.controller("cart",["$scope",function(s){
+    s.m = m;
 
 }]);
 

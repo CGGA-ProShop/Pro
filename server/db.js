@@ -1,9 +1,12 @@
-var mongoose = require("mongoose");
+var settings = require('./settings');
+var mongoose = require('./mongoose');
 
-var tables = ["users","user_info"];
+var db = mongoose.connection;
 
-var db = mongoose.connection({ip:"mongoose://localhost/"},tables);
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(){
+    console.log('Connection open: '+settings.database.fullPath())
+});
 
-// db uses database not test
 
-expose.mongoose = db;
+module.exports = db;

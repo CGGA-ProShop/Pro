@@ -1,4 +1,11 @@
 {
+    "name": "CGGA-ProShop",
+    "version": "0.0.1",
+    "description":"CGGA ProShop UCF 2014",
+    "repository" :
+    {   "type" : "git",
+        "url" : "http://github.com/CGGA-ProShop/Pro.git"
+    },
     "dependencies" : {
         "express" : "",
         "mongoose" : ""

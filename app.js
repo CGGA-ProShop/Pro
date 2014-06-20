@@ -7,12 +7,6 @@ var server = {
 };
 
 
-//app.use(function(req,res,next){
-//    console.log(req);
-//    console.log(res);
-//});
-
-
 app.get("/inventory/",function(req, res){
 });
 
@@ -24,9 +18,6 @@ app.get("/inventory/:item",function(req, res){
 });
 
 app.use(express.static(__dirname + '/public'))
-    .use(function(){
-        console.log("here");
-    });
 
 
 app.listen(server.port);

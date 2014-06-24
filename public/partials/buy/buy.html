@@ -37,27 +37,29 @@
         </div>
         <div class="splash-wrap">
             <div class="row">
-                <div class="item" ng-repeat="item in inventory" ng-show="view.stack">
-                    <a class="none" href="#/buy/id">
-                        <div class="thumbnail">
-                            <div class="price">$ {{item.price}}</div>
-                            <img src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
-                            <div class="caption">
-                                <h5>{{item.name}}</h5>
+                <a ng-repeat="item in inventory" href="#/buy/{{item.name}}" ng-show="view.stack">
+                    <div class="highLight">
+                        <div class="item">
+                            <div class="thumbnail">
+                                <div class="price">${{item.price.toPrecision(2)}}</div>
+                                <img src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
+                                <div class="caption">
+                                    <h5>{{item.name}}</h5>
+                                </div>
                             </div>
                         </div>
-                    </a>
-                </div>
-                <div class="media" ng-repeat="item in inventory" ng-show="view.list">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" style="height:64px;width:64px" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">{{item.name}}</h4>
-                        Price: {{item.price}}<br>
-                        Description: {{item.description}}
                     </div>
-                </div>
+                </a>
+                <a class="pull-left" href="">
+                    <div class="media" ng-repeat="item in inventory" ng-show="view.list">
+                            <img class="media-object" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
+                        <div class="media-body">
+                            <h4 class="media-heading">{{item.name}}</h4>
+                            Price: {{item.price}}<br>
+                            Description: {{item.description}}
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

@@ -9,6 +9,16 @@ function exists(q){ return (typeof q!="undefined"&&q!=null);}
  * @param message
  */
 function log(message){if ( window.console && window.console.log ) {console.log(message);}}
+function setActive(list, active){
+    if(list.hasOwnProperty(active)) {
+        angular.forEach(list, function (page,key) {
+            list[key] = false;
+        });
+        list[active] = true;
+    }
+    log(list);
+}
+
 
 var app = angular.module("proShop",['ngRoute']);
 
@@ -25,7 +35,7 @@ app.config(['$routeProvider',
             controller: "buyItem"
         }).when('/rent',{
             templateUrl: "partials/rent.html",
-            controller: "main"
+            controller: "rent"
         }).when('/cart', {
             templateUrl: "partials/cart.html",
             controller: "cart"
@@ -65,26 +75,30 @@ app.factory("settings",[function(){
 }]);
 
 app.factory("initModel",["$http","settings",function(h,s){
-    var m = {};
+    var service = {};
 
-    m.getSettings = function(m){
+    service.getSettings = function(m){
         m.settings = s;
     };
 
-    m.getItem = function(m){
+    service.getItem = function(m){
         h.get(s.fullPath()+"inventory/").success(function(data){
             m.items = data;
         }).error(function(data){
             console.error(data);
         });
     };
-    return m;
+    return service;
 }]);
 
 
 app.factory("viewModel",["initModel",function(initModel){
     var m = {
-
+        active: {
+            home: true,
+            buy: false,
+            rent: false
+        }
     };
     initModel.getSettings(m);
     initModel.getItem(m);
@@ -95,6 +109,7 @@ app.factory("viewModel",["initModel",function(initModel){
 
 app.controller("main",["$scope","viewModel",function(s,m){
     s.m = m;
+    setActive(m.active,"home");
 
     s.change = function(input){
         m.test = input;
@@ -102,16 +117,19 @@ app.controller("main",["$scope","viewModel",function(s,m){
 
 }]);
 
-app.controller("cart",["$scope",function(s){
+
+app.controller("buyItem",["$scope","viewModel","$http",function(s,m) {
     s.m = m;
+    setActive(m.active, "buy");
 
-}]);
 
-app.controller("buyItem",["$scope","viewModel","$http",function(s,m,h) {
 
 }]);
 
 app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
+    s.m = m;
+    setActive(m.active,"buy");
+
     s.view = {
         stack: true,
         list: false
@@ -121,7 +139,7 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
         console.log(typeof text);
         console.log(exists(text));
         if(exists(text) && text != "") {
-            h.get("http://localhost:8888/inventory/" + text)
+            h.get("http://localhost:8080/r/inventory/" + text)
                 .success(function (response) {
                     s.data = response;
                 })
@@ -129,31 +147,18 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
                 });
         }
     };
-    h.get()
-        .success(function(){
 
-        })
-        .error(function(){
-
-        });
     s.showView = function(type){
-        if(s.view.hasOwnProperty(type)){
-            for(var view in s.view){
-                if(s.view.hasOwnProperty(view))
-                    s.view[view] = false;
-            }
-            s.view[type] = true;
-        }
+        setActive(s.view, type);
     };
 
-    s.categories = [{name:"Clubs",members:[{name:"Iron",category:"Clubs"},{name:"Putters",Category:"Clubs"}]}];
 
     s.clickCategory = function(category){
         s.searchText = category.name;
         s.getInventory(s.searchText)
     };
 
-    s.m = {settings:{webSiteName:"CGGA Proshop"}};
+    s.categories = [{name:"Clubs",members:[{name:"Iron",category:"Clubs"},{name:"Putters",Category:"Clubs"}]}];
     s.inventory = [{
         name:"Golf Club",
         price:10
@@ -176,4 +181,16 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
         name:"Shirt",
         price:10
     }];
+}]);
+
+
+app.controller("rent",["$scope","viewModel",function(s, m){
+    s.m = m;
+    setActive(m.active, "rent");
+
+}]);
+
+app.controller("cart",["$scope",function(s){
+    s.m = m;
+
 }]);

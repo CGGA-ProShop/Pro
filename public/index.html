@@ -16,7 +16,7 @@
     <!--- Scripts ---->
     <script src="components/jquery/dist/jquery.min.js"></script>
     <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="components/angular/angular.min.js"></script>
+    <script src="components/angular/angular.js"></script>
     <script src="components/angular-route/angular-route.min.js"></script>
     <script src="controllers/main.js"></script>
 </head>
@@ -32,15 +32,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">{{m.settings.webSiteName}}</a>
+                    <a class="navbar-brand" href="#">CGGA ProShop</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#/home">Home</a></li>
-                        <li><a href="#/buy">Buy</a></li>
-                        <li><a href="#/rent">Rent</a></li>
+                        <li ng-class="{active:m.active.home}"><a href="#/home">Home</a></li>
+                        <li ng-class="{active:m.active.buy}"><a href="#/buy">Buy</a></li>
+                        <li ng-class="{active:m.active.rent}"><a href="#/rent">Rent</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown">Other <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -71,6 +71,7 @@
         </nav>
         <div class="pg-wrap">
 			<div class="pg-view" ng-view></div>
+            <div class="clear"></div>
         </div>
         <footer>
             A project by Steve Carroll, Brandon Couts, Garry Cronyn.<br>

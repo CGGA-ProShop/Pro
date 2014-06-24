@@ -12,7 +12,7 @@ module.exports = {
     },
     server: {
         host: "http://localhost",
-        port: 80,
+        port: 8080,
         fullPath: function(){
             return (this.port == 80)?this.host+'/':this.host+':'+this.port+'/';
         }

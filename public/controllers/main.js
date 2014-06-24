@@ -48,7 +48,7 @@ app.factory("settings",[function(){
         host: "http://localhost",
         port: "/",
         fullPath: function(){return this.host+this.port;},
-        webSiteName: "CGGA",
+        webSiteName: "CGGA ProShop",
         projectName: "ProShop",
         authors: [{
                 name: "Brandon Couts",
@@ -74,6 +74,8 @@ app.factory("initModel",["$http","settings",function(h,s){
     m.getItem = function(m){
         h.get(s.fullPath()+"inventory/").success(function(data){
             m.items = data;
+        }).error(function(data){
+            console.error(data);
         });
     };
     return m;

@@ -4,10 +4,10 @@ var db = require("./server/db.js");
 var inventory = require('./server/pages/items');
 
 var app = express();
-app.use(function(req,res,next){
-    console.log("Accepted connection: "+req.url);
-    next();
-});
+//app.use(function(req,res,next){
+    //console.log("Accepted connection: "+req.url);
+//    next();
+//});
 
 // Resource API
 app.get("/r/inventory/",function(req,res){inventory.items(req,res)});

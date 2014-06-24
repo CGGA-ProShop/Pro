@@ -9,34 +9,16 @@
     <!--<link rel="shortcut icon" href="../../assets/ico/favicon.ico">-->
     <title>CGGA Proshop</title>
 
+    <!--- Styles ---->
+    <link href="components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
     <!--- Scripts ---->
     <script src="components/jquery/dist/jquery.min.js"></script>
     <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
     <script src="components/angular-route/angular-route.min.js"></script>
     <script src="controllers/main.js"></script>
-
-    <!--- Styles ---->
-    <link href="components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container {
-            width: 1000px;
-			margin: 51px auto 0 auto;
-            padding: 0;
-        }
-        .view-wrapper {
-            min-height: 1000px;
-        }
-        a {
-            cursor: pointer;
-        }
-		
-		footer {
-			border-top: 1px solid black;
-			text-align: center;
-			font-size: 10px;
-		}
-    </style>
 </head>
 <body ng-controller="main">
     <div>
@@ -87,16 +69,16 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <div class="container">
-			<div class="view-wrapper" ng-view></div>
-			<footer>
-				A project by Steve Carroll, Brandon Couts, Garry Cronyn.<br>
-				All images, and descriptions © Original Owners, and are used for educational proposes only.<br>
-				All other content © Copyright 2013, University of Central Florida<br>
-				University of Central Florida - Managing IT Integration - CIS 4524, Summer 2014<br>
-				This is not an actual site.
-			</footer>
+        <div class="pg-wrap">
+			<div class="pg-view" ng-view></div>
         </div>
+        <footer>
+            A project by Steve Carroll, Brandon Couts, Garry Cronyn.<br>
+            All images, and descriptions © Original Owners, and are used for educational proposes only.<br>
+            All other content © Copyright 2013, University of Central Florida<br>
+            University of Central Florida - Managing IT Integration - CIS 4524, Summer 2014<br>
+            This is not an actual site.
+        </footer>
     </div>
 </body>
 </html>

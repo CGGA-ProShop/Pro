@@ -1,0 +1,92 @@
+body {
+  font-family: 'Open Sans', 'Lucida Sans', 'Lucida Grande', sans-serif;
+}
+.pg-wrap {
+  margin-top: 51px;
+  padding: 5px 15px;
+}
+.pg-wrap .pg-view {
+  min-height: 1000px;
+}
+footer {
+  text-align: center;
+  font-size: .8em;
+  background: #e7e7e7;
+}
+.clear {
+  clear: both;
+}
+.normal-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+.category-list {
+  padding: 0 0 0 13px;
+}
+.member-list {
+  padding: 0 0 0 13px;
+}
+.content {
+  margin-top: 5px;
+}
+.breadcrumb {
+  display: inline-block;
+  margin: 7px 0;
+  background: none;
+  padding: 0;
+}
+.breadcrumb > li + li:before {
+  color: inherit;
+}
+.row {
+  margin: 0;
+  padding: 0;
+}
+.search {
+  width: 24%;
+  float: left;
+  position: relative;
+  margin-right: 1%;
+}
+.splash-wrap {
+  width: 75%;
+  float: left;
+  position: relative;
+}
+.item {
+  float: left;
+  position: relative;
+  width: 195px;
+  margin: 0 5px 5px 0;
+}
+.thumbnail {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.thumbnail h5 {
+  margin: 0;
+}
+.thumbnail p {
+  margin: 0;
+}
+.thumbnail .caption {
+  padding: 5px;
+  margin: 0;
+}
+.thumbnail .price {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+}
+a + .no-style {
+  text-decoration: none;
+  color: inherit;
+}
+a + .no-style + :hover,
+a + .no-style + :active,
+a + .no-style + :visited {
+  text-decoration: inherit;
+  color: inherit;
+}

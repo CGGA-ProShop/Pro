@@ -10,13 +10,18 @@ function exists(q){ return (typeof q!="undefined"&&q!=null);}
  */
 function log(message){if ( window.console && window.console.log ) {console.log(message);}}
 function setActive(list, active){
-    if(list.hasOwnProperty(active)) {
-        angular.forEach(list, function (page,key) {
-            list[key] = false;
-        });
+    angular.forEach(list, function (page,key) {
+        list[key] = false;
+    });
+    if(list.hasOwnProperty(active))
         list[active] = true;
-    }
-    log(list);
+}
+function urlParams(v) {
+    var vars = {};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, function (m, key, value) {
+        vars[key]?vars[key]=vars[key]+','+value:vars[key]=value;
+    });
+    if (v) return vars[v]; else return vars;
 }
 
 
@@ -47,7 +52,7 @@ app.config(['$routeProvider',
             controller: "account"
         }).when('/error',{
             templateUrl: "partials/404.html",
-            controller: "main"
+            controller: "error"
         }).otherwise({
             redirectTo: 'home'
         });
@@ -101,7 +106,7 @@ app.factory("viewModel",["initModel",function(initModel){
         }
     };
     initModel.getSettings(m);
-    initModel.getItem(m);
+    //initModel.getItem(m);
 
     return m;
 }]);
@@ -192,5 +197,12 @@ app.controller("rent",["$scope","viewModel",function(s, m){
 
 app.controller("cart",["$scope",function(s){
     s.m = m;
+    setActive(m.active);
+}]);
 
+
+app.controller("error",["$scope","viewModel",function(s,m){
+    s.m = m;
+    s.error = {};
+    s.error.display = decodeURIComponent(urlParams()["d"]);
 }]);

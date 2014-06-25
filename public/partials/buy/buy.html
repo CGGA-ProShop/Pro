@@ -1,20 +1,4 @@
 <div>
-    <div class="top">
-        <ol class="breadcrumb">
-            <li><a href="#/home">Home</a></li>
-            <li><a href="#/buy">Buy</a></li>
-        </ol>
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-default" ng-class="{active:view.stack}" ng-click="showView('stack')">
-                <span class="glyphicon glyphicon-th-large"></span>
-            </button>
-            <button type="button" class="btn btn-default" ng-class="{active:view.list}" ng-click="showView('list')">
-                <span class="glyphicon glyphicon-list"></span>
-            </button>
-            </span>
-        </div>
-        <div class="clear"></div>
-    </div>
     <div class="content">
         <div class="search">
             <input type="text" ng-model="searchText" class="form-control" ng-change="getInventory(searchText)">
@@ -36,7 +20,23 @@
             </ul>
         </div>
         <div class="splash-wrap">
-            <div class="row">
+            <div class="top">
+                <ol class="breadcrumb">
+                    <li><a href="#/home">Home</a></li>
+                    <li><a href="#/buy">Buy</a></li>
+                </ol>
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default" ng-class="{active:view.stack}" ng-click="showView('stack')">
+                        <span class="glyphicon glyphicon-th-large"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" ng-class="{active:view.list}" ng-click="showView('list')">
+                        <span class="glyphicon glyphicon-list"></span>
+                    </button>
+                    </span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="items row">
                 <a ng-repeat="item in inventory" href="#/buy/{{item.name}}" ng-show="view.stack">
                     <div class="highLight">
                         <div class="item">
@@ -50,9 +50,9 @@
                         </div>
                     </div>
                 </a>
-                <a class="pull-left" href="">
+                <a href="">
                     <div class="media" ng-repeat="item in inventory" ng-show="view.list">
-                            <img class="media-object" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
+                        <a class="pull-left"> <img class="media-object pull-left" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver"></a>
                         <div class="media-body">
                             <h4 class="media-heading">{{item.name}}</h4>
                             Price: {{item.price}}<br>

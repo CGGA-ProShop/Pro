@@ -1,3 +1,14 @@
+.badge {
+  background: #6aa84f;
+}
+.glyphicon-shopping-cart {
+  color: #6aa84f;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: rgba(106, 168, 79, 0.95);
+}
 .navbar {
   background: #b9c8b4;
   background: rgba(185, 200, 180, 0.75);
@@ -6,16 +17,23 @@
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   color: black;
 }
+.navbar .badge {
+  font-size: 16px;
+  padding: 1px 7px;
+}
 .navbar-default .navbar-nav > li > a {
   color: black;
 }
+.navbar-default .navbar-nav > li > a:hover {
+  color: #6AA84F;
+}
 .navbar-default .navbar-nav > li.active > a {
   background: rgba(106, 168, 79, 0.95);
-  color: #B6D7A8;
+  color: white;
 }
 .navbar-default .navbar-nav > li.active > a:hover {
-  color: white;
   background: #6AA84F;
+  color: white;
 }
 .navbar-default .navbar-brand {
   color: black;
@@ -31,6 +49,7 @@ body {
 .pg-wrap {
   margin-top: 51px;
   padding: 5px 15px;
+  background: #E6E6E6;
 }
 .pg-wrap .pg-view {
   min-height: 1000px;
@@ -46,13 +65,16 @@ footer {
 .content {
   margin-top: 5px;
 }
-.breadcrumb {
+.top {
+  padding: 5px;
+}
+.top .breadcrumb {
   display: inline-block;
   margin: 7px 0;
   background: none;
   padding: 0 0 0 5px;
 }
-.breadcrumb > li + li:before {
+.top .breadcrumb > li + li:before {
   color: inherit;
 }
 .row {
@@ -62,10 +84,6 @@ footer {
 .container {
   background: #F7F7F7;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  border-top: 1px solid #EAEAEA;
-  border-left: 1px solid #EAEAEA;
-  border-right: 1px solid #FFF;
-  border-bottom: 1px solid #FFF;
 }
 .search {
   width: 24%;
@@ -76,10 +94,6 @@ footer {
   min-height: 1000px;
   background: #F7F7F7;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  border-top: 1px solid #EAEAEA;
-  border-left: 1px solid #EAEAEA;
-  border-right: 1px solid #FFF;
-  border-bottom: 1px solid #FFF;
 }
 .search input[type="text"] {
   border-radius: inherit;
@@ -103,10 +117,9 @@ footer {
   min-height: 1000px;
   background: #F7F7F7;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  border-top: 1px solid #EAEAEA;
-  border-left: 1px solid #EAEAEA;
-  border-right: 1px solid #FFF;
-  border-bottom: 1px solid #FFF;
+}
+.splash-wrap .items {
+  padding: 5px;
 }
 .highLight {
   margin: 0px;

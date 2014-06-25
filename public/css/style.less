@@ -1,3 +1,14 @@
+.badge {
+  background: rgb(106, 168, 79);
+}
+
+.glyphicon-shopping-cart {
+  color: rgb(106, 168, 79);
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+  background-color: rgba(106, 168, 79, 0.95);
+}
 .navbar {
   background: rgb(185, 200, 180);
   background: rgba(185, 200, 180, 0.75);
@@ -5,21 +16,28 @@
   border-bottom: 1px solid #a4baa4;
   box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
   color: black;
+  .badge {
+    font-size: 16px;
+    padding: 1px 7px;
+  }
+
   &-default {
     .navbar{
       &-nav{
         &>li {
           & > a {
             color: black;
+            &:hover {
+              color: #6AA84F;
+            }
           }
         }
         &>li.active>a{
           background: rgba(106, 168, 79, 0.95);
-          color: #B6D7A8;
-
+          color: white;
           &:hover {
-            color: white;
             background: #6AA84F;
+            color: white;
           }
         }
       }
@@ -34,6 +52,7 @@
   }
 }
 
+
 body {
   font-family: 'Open Sans','Lucida Sans','Lucida Grande',sans-serif;
   background:rgba(185, 200, 180, 0.01);
@@ -43,7 +62,9 @@ body {
 .pg-wrap {
   margin-top: 51px;
   padding: 5px 15px;
+  background: #E6E6E6;
   .pg-view {
+
     min-height: 1000px;
   }
 }
@@ -62,16 +83,20 @@ footer {
   margin-top: 5px;
 }
 
-.breadcrumb {
-  display: inline-block;
-  margin: 7px 0;
-  background: none;
-  padding: 0 0 0 5px;
+.top {
+  padding: 5px;
+  .breadcrumb {
+    display: inline-block;
+    margin: 7px 0;
+    background: none;
+    padding: 0 0 0 5px;
+    & > li + li:before {
+      color: inherit;
+    }
+  }
 }
 
-.breadcrumb>li+li:before{
-  color: inherit;
-}
+
 
 .row {
   margin: 0;
@@ -81,11 +106,9 @@ footer {
 .container {
   background: #F7F7F7;
   box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-  border-top: 1px solid #EAEAEA;
-  border-left: 1px solid #EAEAEA;
-  border-right: 1px solid #FFF;
-  border-bottom: 1px solid #FFF;
+  //border: 1px solid #EAEAEA, 1px solid #FFF, 1px solid #FFF, 1px solid #EAEAEA;
 }
+
 
 .search {
   width: 24%;
@@ -121,6 +144,9 @@ footer {
   position:relative;
   min-height: 1000px;
   .container();
+  .items {
+    padding: 5px;
+  }
 }
 
 .highLight {

@@ -195,9 +195,28 @@ app.controller("rent",["$scope","viewModel",function(s, m){
 
 }]);
 
-app.controller("cart",["$scope",function(s){
+app.controller("cart",["$scope","viewModel",function(s, m){
     s.m = m;
     setActive(m.active);
+
+    s.items = [{
+		name: "Nike men's shirt fashionable",
+		price: 10,
+		qty: 3
+		},
+		{
+		name: "Adidas women's pants trendy",
+		price: 5,
+		qty:1
+		}];
+
+	s.total = function(item){
+		item.total = item.qty * item.price;
+	}
+	for(var i = 0; i < s.items.length; i++){
+		s.total(s.items[i]);
+	}
+
 }]);
 
 

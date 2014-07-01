@@ -1,0 +1,31 @@
+<!--Item: Name, Picture, Description, Price, Remove button, Change quantity
+Checkout box-->
+<style>
+.media-heading{
+	font-weight:bold;
+}
+.space{
+	padding: 0 0 5px 0;
+}
+</style>
+
+<ul>
+	<li class="space" ng-repeat="item in items">
+		<div class="media">
+			<a class="pull-left" href="#">
+				<img class="media-object" src="/images/items/tourpro_driver_large.jpg" width= "64px" alt="...">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading">{{item.name}}</h4>
+				<div class="pull-left input-group" style="width:245px;">
+					<span class="input-group-addon">Change Quantity</span>
+					<input type="quantity" class="form-control" ng-model="item.qty" ng-change="total(item)" ng-it>
+					<span class="input-group-addon">{{item.total}}</span>
+				</div>
+				<div class="clearfix">
+					<button type="btn" class="btn btn-danger">Remove</button>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>

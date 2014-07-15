@@ -1,0 +1,87 @@
+<style>
+    .account-panel {
+        margin: 0 auto;
+        width: 600px;
+        padding: 15px;
+        text-align: left;
+    }
+    .account-panel table {
+        text-align: center;
+    }
+    .account-panel table td {
+        margin: 0 auto;
+        padding: 3px;
+    }
+    .account-panel table td.right {
+        padding-top: 6px;
+    }
+    h1 {
+        margin: 0 0 15px 0;
+    }
+    .bg-danger {
+        margin-bottom: 15px;
+        padding: 5px;
+        color: red;
+        border: 1px solid lightcoral;
+    }
+    .bg-success {
+        margin-bottom: 15px;
+        padding: 5px;
+        color: green;
+        border: 1px solid green;
+    }
+    .error {
+        background-color: #f2dede;
+        border: 1px solid lightcoral;
+    }
+</style>
+<div class="account-panel container">
+    <form name="loginForm" ng-submit="login(credentials)" novalidate>
+        <h1>Account</h1>
+        <div class="bg-danger"  ng-if="error.label">{{error.label}}</div>
+        <div class="bg-success" ng-if="success">{{success}}</div>
+        <table align="center">
+            <tr>
+                <td class="text-right">
+                    Username:
+                </td>
+                <td class="text-left">
+                    {{currentUser.name}}
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    Display name:
+                </td>
+                <td>
+                    <input id="displayName" type="text" ng-model="currentUser.name">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    New Password:
+                </td>
+                <td>
+                    <input id="password" type="password" ng-model="credentials.password" ng-change="change()" ng-class="{error:error.pass}">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    Confirm Password:
+                </td>
+                <td>
+                    <input id="password" type="password" ng-model="credentials.password" ng-change="change()" ng-class="{error:error.pass}">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    Enter your old Password:
+                </td>
+                <td>
+                    <input id="password" type="password" ng-model="credentials.password" ng-change="change()" ng-class="{error:error.pass}">
+                </td>
+            </tr>
+            <tr><td colspan="2" class="center"><input type="submit" value="Save Changes"></td></tr>
+        </table>
+    </form>
+</div>

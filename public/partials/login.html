@@ -1,0 +1,59 @@
+<style>
+    .login-panel {
+        margin: 0 auto;
+        width: 300px;
+        padding: 15px;
+        text-align: left;
+    }
+    .login-panel table {
+        text-align: center;
+    }
+    .login-panel table td {
+        margin: 0 auto;
+        padding: 3px;
+    }
+    .login-panel table td.right {
+        padding-top: 6px;
+    }
+    h1 {
+        margin: 0 0 15px 0;
+    }
+    .bg-danger {
+        margin-bottom: 15px;
+        padding: 5px;
+        color: red;
+        border: 1px solid lightcoral;
+    }
+    .bg-success {
+        margin-bottom: 15px;
+        padding: 5px;
+        color: green;
+        border: 1px solid green;
+    }
+    .error {
+        background-color: #f2dede;
+        border: 1px solid lightcoral;
+    }
+</style>
+<div class="login-panel container">
+    <form name="loginForm" ng-submit="login(credentials)" novalidate>
+        <h1>Login</h1>
+        <div class="bg-danger"  ng-if="error.label">{{error.label}}</div>
+        <div class="bg-success" ng-if="success">{{success}}</div>
+        <table align="center">
+            <tr>
+                <td class="right">
+                    <label for="username">Username:</label>
+                </td>
+                <td>
+                    <input id="username" type="text" ng-model="credentials.username" ng-change="change()" ng-class="{error:error.user}">
+                </td>
+            </tr>
+            <tr>
+                <td class="right"><label for="password">Password:</label></td>
+                <td><input id="password" type="password" ng-model="credentials.password" ng-change="change()" ng-class="{error:error.pass}"></td>
+            </tr>
+            <tr><td colspan="2" class="center"><input type="submit" value="Login"></td></tr>
+        </table>
+    </form>
+</div>

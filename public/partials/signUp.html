@@ -1,0 +1,47 @@
+<style>
+    .sign-up-panel {
+        margin: 0 auto;
+        width: 400px;
+        padding: 15px;
+        text-align: left;
+    }
+    .sign-up-panel table {
+        width: 100%;
+        text-align: center;
+    }
+    .sign-up-panel table td {
+        margin: 0 auto;
+        padding: 3px;
+    }
+    .sign-up-panel table .text-right {
+        padding-top: 5px;
+    }
+    h1 {
+        margin: 0 0 15px 0;
+    }
+
+</style>
+<div class="sign-up-panel container">
+    <h1>Sign up</h1>
+    <form ng-submit="signUp(credentials)" novalidate>
+        <table align="center">
+            <tr>
+                <td class="text-right"><label for="username">Username:</label></td>
+                <td class="text-left"><input id="username" type="text" ng-model="credentials.username"></td>
+            </tr>
+            <tr>
+                <td class="text-right"><label for="password">Password:</label></td>
+                <td class="text-left"><input id="password" type="password" ng-model="credentials.password"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label>
+                        I agree to the <a href="#/terms">terms</a> and conditions
+                        <input type="checkbox">
+                    </label>
+                </td>
+            </tr>
+            <tr><td colspan="2" class="center"><input type="submit" value="Sign Up"></td></tr>
+        </table>
+    </form>
+</div>

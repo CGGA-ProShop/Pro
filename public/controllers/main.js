@@ -24,8 +24,7 @@ function urlParams(v) {
     if (v) return vars[v]; else return vars;
 }
 
-
-var app = angular.module("proShop",['ngRoute']);
+var app = angular.module("proShop",['ngRoute', 'ngCookies', 'AuthService']);
 
 app.config(['$routeProvider',
     function(r){
@@ -47,12 +46,24 @@ app.config(['$routeProvider',
         }).when('/login', {
             templateUrl: "partials/login.html",
             controller: "login"
+        }).when('/login/:success', {
+            templateUrl: "partials/login.html",
+            controller: "login"
+        }).when('/logout', {
+            templateUrl: "partials/logout.html",
+            controller: "logout"
+        }).when('/signUp', {
+            templateUrl: "partials/signUp.html",
+            controller: "signUp"
         }).when('/account', {
             templateUrl: "partials/account.html",
             controller: "account"
         }).when('/error',{
             templateUrl: "partials/404.html",
             controller: "error"
+        }).when('/terms',{
+            templateUrl: "partials/terms.html",
+            controller: "terms"
         }).otherwise({
             redirectTo: 'home'
         });
@@ -79,61 +90,54 @@ app.factory("settings",[function(){
     };
 }]);
 
-app.factory("initModel",["$http","settings",function(h,s){
-    var service = {};
 
-    service.getSettings = function(m){
-        m.settings = s;
-    };
-
-    service.getItem = function(m){
-        h.get(s.fullPath()+"inventory/").success(function(data){
-            m.items = data;
-        }).error(function(data){
-            console.error(data);
-        });
-    };
-    return service;
-}]);
-
-
-app.factory("viewModel",["initModel",function(initModel){
+app.factory("viewModel",[function(){
     var m = {
-        active: {
-            home: true,
-            buy: false,
-            rent: false
+        active: {},
+        setActive: function(list, active) {
+            angular.forEach(list, function (page, key) {
+                list[key] = false;
+            });
+            list[active] = true;
         }
     };
-    initModel.getSettings(m);
-    //initModel.getItem(m);
-
     return m;
 }]);
 
 
-app.controller("main",["$scope","viewModel",function(s,m){
+app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthService", function(s, m, l, USER_ROLES, AuthService){
     s.m = m;
-    setActive(m.active,"home");
+    m.setActive(m.active,"home");
 
-    s.change = function(input){
-        m.test = input;
-    }
+    s.currentUser = null;
+    s.userRoles = USER_ROLES;
+    s.isAuthorized = AuthService.isAuthorized;
 
+    s.setCurrentUser = function(user) { s.currentUser = user; };
+    s.logout = function() {
+        AuthService.logout();
+        s.currentUser = null;
+        l.path("/login/success");
+    };
 }]);
 
 
-app.controller("buyItem",["$scope","viewModel","$http",function(s,m) {
+app.controller("buyItem",["$scope","viewModel","$http","$routeParams",function(s, m, h, params) {
     s.m = m;
-    setActive(m.active, "buy");
-
+    m.setActive(m.active, "buy");
+    h.get("/r/inventory/"+params.item)
+        .success(function(data){
+            s.item = data;
+        }).error(function(data){
+            // error
+        });
 
 
 }]);
 
 app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
     s.m = m;
-    setActive(m.active,"buy");
+    m.setActive(m.active,"buy");
 
     s.view = {
         stack: true,
@@ -156,7 +160,6 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
     s.showView = function(type){
         setActive(s.view, type);
     };
-
 
     s.clickCategory = function(category){
         s.searchText = category.name;
@@ -191,37 +194,58 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
 
 app.controller("rent",["$scope","viewModel",function(s, m){
     s.m = m;
-    setActive(m.active, "rent");
+    m.setActive(m.active, "rent");
 
 }]);
 
 app.controller("cart",["$scope","viewModel",function(s, m){
     s.m = m;
-    setActive(m.active);
-
-    s.items = [{
-		name: "Nike men's shirt fashionable",
-		price: 10,
-		qty: 3
-		},
-		{
-		name: "Adidas women's pants trendy",
-		price: 5,
-		qty:1
-		}];
-
-	s.total = function(item){
-		item.total = item.qty * item.price;
-	}
-	for(var i = 0; i < s.items.length; i++){
-		s.total(s.items[i]);
-	}
+    m.setActive(m.active, "cart");
 
 }]);
 
+app.controller("login",["$scope", "viewModel", "$routeParams", "$rootScope", "$location", "AUTH_EVENTS", "AuthService", function(s, m, p, r, l, AUTH_EVENTS, Auth) {
+    s.m = m;
+    s.error = {};
+    if(p.success) {
+        s.success = "Successfully logged out";
+    }
 
-app.controller("error",["$scope","viewModel",function(s,m){
+    s.change = function(){ s.error = {}; };
+    s.login = function(credentials) {
+        Auth.login(credentials).then(function(user) {
+            s.setCurrentUser(user); // r.$broadcast(AUTH_EVENTS.loginSuccess);
+            l.path("/home");
+        }, function(error) {
+            if(error.status == 401) s.error.label = error.data.error;
+            r.$broadcast(AUTH_EVENTS.loginFailed);
+        });
+    };
+}]);
+
+app.controller("signUp",["$scope", "viewModel", "$rootScope", "$location", "AUTH_EVENTS", "AuthService", function(s, m, r, l, AUTH_EVENTS, Auth) {
+    s.m = m;
+    s.error = {};
+
+    s.change = function(){ s.error = {}; };
+    s.signUp = function(credentials) {
+        alert("Hey man! You want to sign up! That's cool. This isn't working just yet though- Sorry about that.");
+        Auth.signUp(credentials).then(function(user) {
+            s.setCurrentUser(user); // r.$broadcast(AUTH_EVENTS.loginSuccess);
+            l.path("/home");
+        }, function(error){
+            if(error.status == 401) s.error.label = error.data.error;
+            r.$broadcast(AUTH_EVENTS.loginFailed);
+        });
+    };
+}]);
+
+app.controller("error",["$scope","viewModel", function(s, m) {
     s.m = m;
     s.error = {};
     s.error.display = decodeURIComponent(urlParams()["d"]);
+}]);
+
+app.controller("account",["$scope","viewModel",function(s, m){
+    s.m = m;
 }]);

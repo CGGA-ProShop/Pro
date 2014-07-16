@@ -1,6 +1,6 @@
 
 // https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
-var app = angular.module("AuthService",[]);
+var app = angular.module("AuthService",["ngCookies"]);
 
 app.constant('AUTH_EVENTS',{
     loginSuccess: 'auth-login-success',
@@ -18,27 +18,33 @@ app.constant('USER_ROLES', {
     guest: 'guest'
 });
 
-app.service('Session', function () {
+app.service('Session', ["$cookies",function (cookie) {
     this.create = function (sessionId, userId, userRole) {
-        this.id = sessionId;
-        this.userId = userId;
-        this.userRole = userRole;
+        this.id       = cookie.session = sessionId;
+        this.userId   = cookie.user    = userId;
+        this.userRole = cookie.role    = userRole;
     };
-    this.read = function(){
-        return {
-        name: this.userId,
-        role: this.userRole
+    this.read = function(){ return {
+        session: (cookie.session)? cookie.session: this.id,
+        name:    (cookie.user)?    cookie.user:    this.userId,
+        role:    (cookie.role)?    cookie.role:    this.userRole
     };};
     this.destroy = function () {
-        this.id = null;
-        this.userId = null;
-        this.userRole = null;
+        this.id       = null; delete cookie["session"];
+        this.userId   = null; delete cookie["user"];
+        this.userRole = null; delete cookie["role"];
     };
     return this;
-});
+}]);
 
-app.factory('AuthService', ["$http", "Session", "$q", function ($http, Session, $q) {
+app.factory('AuthService', ["$http", "Session", "$cookies", function ($http, Session, cookie) {
     var authService = {};
+
+    authService.logged = function() {
+        if(Session.read().session) {
+            return Session.read();
+        }
+    };
 
     authService.login = function (credentials) {
         return $http.post('/login', credentials)

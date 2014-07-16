@@ -31,6 +31,13 @@
   background: rgba(106, 168, 79, 0.95);
   color: white;
 }
+.navbar-default .navbar-nav > li.active > a b {
+  color: white;
+}
+.navbar-default .navbar-nav > li.active > a .badge {
+  background: white;
+  color: #6aa84f;
+}
 .navbar-default .navbar-nav > li.active > a:hover {
   background: #6AA84F;
   color: white;

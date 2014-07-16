@@ -22,8 +22,8 @@ app.post("/login",function(req, res) {
     //req.body { username: '', password: '' }
 
     var user = "Brandon";
-    var pass = "duke";
-    if(req.body.username === user) {
+    var pass = "abc";
+    if(req.body.username.toLowerCase() === user.toLowerCase()) {
         if(req.body.password === pass) {
             res.send(200, {id: 1, user: {name: req.body.username, role: USER_ROLES.admin}});
         } else {

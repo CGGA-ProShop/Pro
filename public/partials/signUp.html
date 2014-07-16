@@ -26,7 +26,7 @@
     <form ng-submit="signUp(credentials)" novalidate>
         <table align="center">
             <tr>
-                <td class="text-right"><label for="username">Username:</label></td>
+                <td class="text-right" width="50%"><label for="username">Username:</label></td>
                 <td class="text-left"><input id="username" type="text" ng-model="credentials.username"></td>
             </tr>
             <tr>
@@ -34,9 +34,13 @@
                 <td class="text-left"><input id="password" type="password" ng-model="credentials.password"></td>
             </tr>
             <tr>
+                <td class="text-right"><label for="email">Email:</label></td>
+                <td class="text-left"><input id="email" type="text" ng-model="credentials.email"></td>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <label>
-                        I agree to the <a href="#/terms">terms</a> and conditions
+                        I agree to the <a href="#/terms">terms</a> and conditions:&nbsp;
                         <input type="checkbox">
                     </label>
                 </td>

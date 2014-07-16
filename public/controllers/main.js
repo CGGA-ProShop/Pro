@@ -24,7 +24,7 @@ function urlParams(v) {
     if (v) return vars[v]; else return vars;
 }
 
-var app = angular.module("proShop",['ngRoute', 'ngCookies', 'AuthService']);
+var app = angular.module("proShop",['ngRoute', 'AuthService']);
 
 app.config(['$routeProvider',
     function(r){
@@ -44,9 +44,6 @@ app.config(['$routeProvider',
             templateUrl: "partials/cart.html",
             controller: "cart"
         }).when('/login', {
-            templateUrl: "partials/login.html",
-            controller: "login"
-        }).when('/login/:success', {
             templateUrl: "partials/login.html",
             controller: "login"
         }).when('/logout', {
@@ -106,25 +103,26 @@ app.factory("viewModel",[function(){
 
 
 app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthService", function(s, m, l, USER_ROLES, AuthService){
-    s.m = m;
     m.setActive(m.active,"home");
+    s.m = m;
 
-    s.currentUser = null;
+    s.currentUser = AuthService.logged();
     s.userRoles = USER_ROLES;
     s.isAuthorized = AuthService.isAuthorized;
 
     s.setCurrentUser = function(user) { s.currentUser = user; };
     s.logout = function() {
         AuthService.logout();
-        s.currentUser = null;
-        l.path("/login/success");
+        s.currentUser = AuthService.logged();
+        l.path("/login");
     };
 }]);
 
 
 app.controller("buyItem",["$scope","viewModel","$http","$routeParams",function(s, m, h, params) {
-    s.m = m;
     m.setActive(m.active, "buy");
+    s.m = m;
+
     h.get("/r/inventory/"+params.item)
         .success(function(data){
             s.item = data;
@@ -136,8 +134,8 @@ app.controller("buyItem",["$scope","viewModel","$http","$routeParams",function(s
 }]);
 
 app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
-    s.m = m;
     m.setActive(m.active,"buy");
+    s.m = m;
 
     s.view = {
         stack: true,
@@ -145,8 +143,6 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
     };
 
     s.getInventory = function(text) {
-        console.log(typeof text);
-        console.log(exists(text));
         if(exists(text) && text != "") {
             h.get("http://localhost:8080/r/inventory/" + text)
                 .success(function (response) {
@@ -193,32 +189,51 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
 
 
 app.controller("rent",["$scope","viewModel",function(s, m){
-    s.m = m;
     m.setActive(m.active, "rent");
+    s.m = m;
 
 }]);
 
-app.controller("cart",["$scope","viewModel",function(s, m){
-    s.m = m;
+app.controller("cart",["$scope", "viewModel", "$location", function(s, m, l){
     m.setActive(m.active, "cart");
+    s.m = m;
 
+    s.items = [{name:"Shirt"}];
+
+    s.checkOut = function() {
+        l.path("/shipping");
+    };
+
+    s.total = function() {
+        var length = s.items.length, total = 0;
+        for(var i = 0; i < length; i++) {
+            total += s.items[i].qty * s.items[i].price;
+        }
+        return total;
+    };
+
+    s.deleteItem = function(item) {
+        s.items.splice(s.items.indexOf(item), 1);
+    };
 }]);
 
 app.controller("login",["$scope", "viewModel", "$routeParams", "$rootScope", "$location", "AUTH_EVENTS", "AuthService", function(s, m, p, r, l, AUTH_EVENTS, Auth) {
+    m.setActive(m.active);
     s.m = m;
     s.error = {};
-    if(p.success) {
-        s.success = "Successfully logged out";
-    }
+    s.credentials = {username:"",password:""};
+
 
     s.change = function(){ s.error = {}; };
     s.login = function(credentials) {
         Auth.login(credentials).then(function(user) {
             s.setCurrentUser(user); // r.$broadcast(AUTH_EVENTS.loginSuccess);
             l.path("/home");
+            credentials.password = "";
         }, function(error) {
             if(error.status == 401) s.error.label = error.data.error;
             r.$broadcast(AUTH_EVENTS.loginFailed);
+            credentials.password = "";
         });
     };
 }]);
@@ -226,6 +241,7 @@ app.controller("login",["$scope", "viewModel", "$routeParams", "$rootScope", "$l
 app.controller("signUp",["$scope", "viewModel", "$rootScope", "$location", "AUTH_EVENTS", "AuthService", function(s, m, r, l, AUTH_EVENTS, Auth) {
     s.m = m;
     s.error = {};
+    m.setActive(m.active);
 
     s.change = function(){ s.error = {}; };
     s.signUp = function(credentials) {
@@ -243,9 +259,11 @@ app.controller("signUp",["$scope", "viewModel", "$rootScope", "$location", "AUTH
 app.controller("error",["$scope","viewModel", function(s, m) {
     s.m = m;
     s.error = {};
+    m.setActive(m.active);
     s.error.display = decodeURIComponent(urlParams()["d"]);
 }]);
 
 app.controller("account",["$scope","viewModel",function(s, m){
     s.m = m;
+    m.setActive(m.active);
 }]);

@@ -1,66 +1,73 @@
-<div>
-    <div class="content">
-        <div class="search">
-            <input type="text" ng-model="searchText" class="form-control" ng-change="getInventory(searchText)">
-            <ul class="normal-list category-list">
-                <li ng-repeat="category in categories | filter: searchText">
-                    <a href="" ng-click="clickCategory(category)">
-                        {{category.name}}
-                        <span class="badge pull-right">{{(category.members | filter: searchText).length}}</span>
-                    </a>
-                    <ul class="normal-list member-list">
-                        <li ng-repeat="member in filtered = (category.members | filter: searchText)">
-                            <a href="" ng-click="clickCategory(member)">
-                                {{member.name}}
-                                <span class="badge pull-right">1</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+<style>
+    footer {
+        width: 100%;
+    }
+</style>
+<div class="content">
+    <div class="search">
+        <input type="text" ng-model="searchText" class="form-control" ng-change="getInventory(searchText)">
+        <ul class="normal-list category-list">
+            <li ng-repeat="category in categories | filter: searchText">
+                <a href="" ng-click="clickCategory(category)">
+                    {{category.name}}
+                    <span class="badge pull-right">{{(category.members | filter: searchText).length}}</span>
+                </a>
+                <ul class="normal-list member-list">
+                    <li ng-repeat="member in filtered = (category.members | filter: searchText)">
+                        <a href="" ng-click="clickCategory(member)">
+                            {{member.name}}
+                            <span class="badge pull-right">1</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="splash-wrap">
+        <div class="top">
+            <ol class="breadcrumb">
+                <li><a href="#/home">Home</a></li>
+                <li><a href="#/buy">Buy</a></li>
+            </ol>
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default"
+                        ng-class="{active:view.stack}"
+                        ng-click="showView('stack')"
+                        ng-init="view.stack = true">
+                    <span class="glyphicon glyphicon-th-large"></span>
+                </button>
+                <button type="button" class="btn btn-default"
+                        ng-class="{active:view.list}"
+                        ng-click="showView('list')"
+                        ng-init="view.list = false">
+                    <span class="glyphicon glyphicon-list"></span>
+                </button>
+                </span>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="splash-wrap">
-            <div class="top">
-                <ol class="breadcrumb">
-                    <li><a href="#/home">Home</a></li>
-                    <li><a href="#/buy">Buy</a></li>
-                </ol>
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-default" ng-class="{active:view.stack}" ng-click="showView('stack')">
-                        <span class="glyphicon glyphicon-th-large"></span>
-                    </button>
-                    <button type="button" class="btn btn-default" ng-class="{active:view.list}" ng-click="showView('list')">
-                        <span class="glyphicon glyphicon-list"></span>
-                    </button>
-                    </span>
+        <div class="items row">
+            <a class="highLight" ng-repeat="item in inventory" href="#/item/{{item.name}}" ng-show="view.stack">
+                <div class="item">
+                    <div class="thumbnail">
+                        <img src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
+                        <div class="caption">
+                            <div class="name">{{display(item)}}</div>
+                            <div class="price">${{item.price.toPrecision(2)}}</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="clear"></div>
-            </div>
-            <div class="items row">
-                <a ng-repeat="item in inventory" href="#/buy/{{item.name}}" ng-show="view.stack">
-                    <div class="highLight">
-                        <div class="item">
-                            <div class="thumbnail">
-                                <div class="price">${{item.price.toPrecision(2)}}</div>
-                                <img src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
-                                <div class="caption">
-                                    <h5>{{item.name}}</h5>
-                                </div>
-                            </div>
-                        </div>
+            </a>
+            <a ng-repeat="item in inventory" href="#/item/{{item.name}}" ng-show="view.list">
+                <div class="media">
+                    <img class="media-object pull-left" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver" width="64px">
+                    <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        Price: {{item.price}}<br>
+                        Description: {{item.description}}
                     </div>
-                </a>
-                <a href="">
-                    <div class="media" ng-repeat="item in inventory" ng-show="view.list">
-                        <a class="pull-left"> <img class="media-object pull-left" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver"></a>
-                        <div class="media-body">
-                            <h4 class="media-heading">{{item.name}}</h4>
-                            Price: {{item.price}}<br>
-                            Description: {{item.description}}
-                        </div>
-                    </div>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
     </div>
 </div>

@@ -34,12 +34,12 @@ app.config(['$routeProvider',
         }).when('/buy', {
             templateUrl: "partials/buy/buy.html",
             controller: "buy"
-        }).when('/buy/:id', {
+        }).when('/buy/:category', {
+            templateUrl: "partials/buy/buy.html",
+            controller: "buy"
+        }).when('/item/:id',{
             templateUrl: "partials/buy/item.html",
             controller: "buyItem"
-        }).when('/rent',{
-            templateUrl: "partials/rent.html",
-            controller: "rent"
         }).when('/cart', {
             templateUrl: "partials/cart.html",
             controller: "cart"
@@ -89,7 +89,7 @@ app.factory("settings",[function(){
 
 
 app.factory("viewModel",[function(){
-    var m = {
+    return {
         active: {},
         setActive: function(list, active) {
             angular.forEach(list, function (page, key) {
@@ -98,7 +98,6 @@ app.factory("viewModel",[function(){
             list[active] = true;
         }
     };
-    return m;
 }]);
 
 
@@ -110,6 +109,8 @@ app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthSe
     s.userRoles = USER_ROLES;
     s.isAuthorized = AuthService.isAuthorized;
 
+    s.cart = [];
+
     s.setCurrentUser = function(user) { s.currentUser = user; };
     s.logout = function() {
         AuthService.logout();
@@ -119,27 +120,45 @@ app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthSe
 }]);
 
 
-app.controller("buyItem",["$scope","viewModel","$http","$routeParams",function(s, m, h, params) {
+app.controller("buyItem",["$scope","viewModel","$http","$location","$routeParams",function(s, m, h, l, params) {
     m.setActive(m.active, "buy");
     s.m = m;
+    s.item = {name:"A shirt", price: "10.00"};
 
-    h.get("/r/inventory/"+params.item)
-        .success(function(data){
-            s.item = data;
-        }).error(function(data){
-            // error
-        });
-
-
+    s.addToCart = function(item, qty, buyOrRent) {
+        log("Adding to cart: "+item.name+" Qty: "+qty);
+        var cartItem = angular.copy(item);
+        cartItem.qty = qty;
+        cartItem.buy = buyOrRent;
+        s.cart.push(cartItem);
+        log(cartItem);
+        l.path("/cart");
+    };
 }]);
 
-app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
+app.controller("buy",["$scope","viewModel", "$http", "$routeParams",function(s, m, h, p) {
     m.setActive(m.active,"buy");
     s.m = m;
 
-    s.view = {
-        stack: true,
-        list: false
+    if(p.category) {
+        s.searchText = p.category;
+    }
+
+    s.display = function(item) { // Shortens the string nicely to fit a certain length
+        var display = item.name;
+        var maxLength = 50;
+        if(item.name.length > maxLength) {
+            display = "";
+            var split = item.name.split(" ");
+            var length = split.length;
+            for(var i = 0; i < length; i++){
+                if(display.length + split[i].length + 1 <= maxLength) {
+                    display += " " + split[i];
+                }
+            }
+            display += "...";
+        }
+        return display;
     };
 
     s.getInventory = function(text) {
@@ -167,7 +186,7 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
         name:"Golf Club",
         price:10
     },{
-        name:"Shirt",
+        name:"Shirt this is a really long item name, it just keeps going and going and going",
         price:10
     },{
         name:"Shirt",
@@ -183,37 +202,48 @@ app.controller("buy",["$scope","viewModel","$http",function(s,m,h){
         price:10
     },{
         name:"Shirt",
+        price:10
+    },{
+        name:"Shirt this is a really long item name, it just keeps going and going and going",
+        price:10
+    },{
+        name:"Shirt this is a really long item name, it just keeps going and going and going",
+        price:10
+    },{
+        name:"Shirt this is a really long item name, it just keeps going and going and going",
+        price:10
+    },{
+        name:"Shirt this is a really long item name, it just keeps going and going and going",
         price:10
     }];
-}]);
-
-
-app.controller("rent",["$scope","viewModel",function(s, m){
-    m.setActive(m.active, "rent");
-    s.m = m;
-
 }]);
 
 app.controller("cart",["$scope", "viewModel", "$location", function(s, m, l){
     m.setActive(m.active, "cart");
     s.m = m;
 
-    s.items = [{name:"Shirt"}];
-
     s.checkOut = function() {
         l.path("/shipping");
     };
 
-    s.total = function() {
-        var length = s.items.length, total = 0;
+    s.numItems = function() {
+        var length = s.cart.length, total = 0;
         for(var i = 0; i < length; i++) {
-            total += s.items[i].qty * s.items[i].price;
+            total += s.cart[i].qty;
         }
         return total;
     };
 
+    s.total = function() {
+        var length = s.cart.length, total = 0;
+        for(var i = 0; i < length; i++) {
+            total += s.cart[i].qty * s.cart[i].price;
+        }
+        return total.toFixed(2);
+    };
+
     s.deleteItem = function(item) {
-        s.items.splice(s.items.indexOf(item), 1);
+        s.cart.splice(s.cart.indexOf(item), 1);
     };
 }]);
 

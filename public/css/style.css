@@ -51,35 +51,78 @@
 }
 body {
   font-family: 'Open Sans', 'Lucida Sans', 'Lucida Grande', sans-serif;
-  background: rgba(185, 200, 180, 0.01);
+  background: #e7e7e7;
 }
 .pg-wrap {
   margin-top: 51px;
-  padding: 5px 15px;
+  padding: 5px 15px 15px 15px;
   background: #E6E6E6;
 }
 .pg-wrap .pg-view {
-  min-height: 1000px;
+  min-height: 800px;
+}
+@media screen and (max-width: 760px) {
+  footer .short {
+    display: inherit;
+  }
+  footer .long {
+    display: none;
+  }
+}
+@media screen and (min-width: 760px) {
+  footer .short {
+    display: none;
+  }
+  footer .long {
+    display: inherit;
+  }
 }
 footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
   text-align: center;
   font-size: .8em;
-  background: #e7e7e7;
+  background-color: #f7f7f7;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 2px 0px;
+}
+footer table {
+  width: 100%;
+}
+footer table tr td {
+  padding: 15px;
+  text-align: left;
+}
+footer .pluggedIn {
+  width: 120px;
+}
+footer .disclaim {
+  width: 50px;
+}
+footer .ucf {
+  width: 80px;
+}
+footer .notSite {
+  text-align: center;
 }
 .clear {
   clear: both;
-}
-.content {
-  margin-top: 5px;
 }
 .top {
   padding: 5px;
 }
 .top .breadcrumb {
   display: inline-block;
+  color: lightgray;
   margin: 7px 0;
   background: none;
   padding: 0 0 0 5px;
+}
+.top .breadcrumb a {
+  color: gray;
 }
 .top .breadcrumb > li + li:before {
   color: inherit;
@@ -98,7 +141,6 @@ footer {
   position: relative;
   margin-right: 1%;
   padding: 5px;
-  min-height: 1000px;
   background: #F7F7F7;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -121,7 +163,6 @@ footer {
   width: 75%;
   float: left;
   position: relative;
-  min-height: 1000px;
   background: #F7F7F7;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -131,12 +172,15 @@ footer {
 .highLight {
   margin: 0px;
   cursor: pointer;
-  float: left;
+  display: inline-block;
+  vertical-align: top;
   position: relative;
   width: 195px;
+  text-decoration: none;
 }
 .highLight:hover {
   border: 2px solid rgba(185, 200, 180, 0.25);
+  text-decoration: none;
 }
 .highLight:hover .item {
   margin: 0px;
@@ -173,11 +217,6 @@ footer {
 .thumbnail .caption {
   padding: 5px;
   margin: 0;
-}
-.thumbnail .price {
-  position: absolute;
-  top: 5px;
-  right: 8px;
 }
 a {
   color: #38761d;

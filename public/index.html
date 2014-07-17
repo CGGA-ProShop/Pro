@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li ng-class="{active:m.active.home}"><a href="#/home">Home</a></li>
-                        <li ng-class="{active:m.active.buy}"><a href="#/buy">Search Inventory</a></li>
+                        <li ng-class="{active:m.active.buy}"><a href="#/buy">Search</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li ng-if="currentUser">
@@ -54,7 +54,9 @@
                         <li ng-if="!currentUser">
                             <a href="#/signUp">Sign Up</a></span>
                         </li>
-                        <li ng-if="currentUser" ng-class="{active:m.active.cart}"><a href="#/cart"><b class="glyphicon glyphicon-shopping-cart"></b> <span class="badge">10</span></a></li>
+                        <li ng-class="{active:m.active.cart}"><a href="#/cart">
+                            <b class="glyphicon glyphicon-shopping-cart"></b> <span class="badge">{{cart.length}}</span></a>
+                        </li>
                         <li ng-if="currentUser" class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -72,11 +74,33 @@
             <div class="clear"></div>
         </div>
         <footer>
-            A project by Steve Carroll, Brandon Couts, Garry Cronyn.<br>
-            All images, and descriptions © Original Owners, and are used for educational proposes only.<br>
-            All other content © Copyright 2013, University of Central Florida<br>
-            University of Central Florida - Managing IT Integration - CIS 4524, Summer 2014<br>
-            This is not an actual site.
+            <table>
+                <tr>
+                    <td class="copyright">
+                        <div class="long">
+                            <div style="font-size:1.2em;font-weight: bold;">© 2014 Steve Carroll, Brandon Couts, Garry Cronyn.</div>
+                            <div>University of Central Florida - Managing IT Integration - CIS 4524, Summer 2014</div>
+                        </div>
+                        <div class="short">
+                            <div style="font-size:1.2em;font-weight: bold;">Copyright</div>
+                        </div>
+                    </td>
+                    <td class="disclaim">Disclaimer</td>
+                    <td class="pluggedIn">
+                        <div class="long">Team PluggedIn</div>
+                        <div class="short">PluggedIn</div>
+                    </td>
+                    <td class="ucf">
+                        <div class="long">
+                            <img src="images/logos/pegasus-icon.png" style="vertical-align: bottom;">
+                            <span style="font-weight: bold">&nbsp;UCF</span>
+                        </div>
+                        <div class="short">
+                            <span style="font-weight: bold">UCF</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </footer>
     </div>
 </body>

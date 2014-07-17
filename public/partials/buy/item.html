@@ -41,16 +41,16 @@
                         <h1>Buy</h1>
                         <div class="text-center">
                             Price: ##<br>
-                            Qty: <select ng-model="qty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="qty=1"></select>
-                            <input type="submit" style="width:100%" value="Add to cart" ng-click="buy()">
+                            Qty: <select ng-model="buyQty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="buyQty=1"></select>
+                            <input type="submit" style="width:100%" value="Add to cart" ng-click="addToCart(item, buyQty, true)">
                         </div>
                     </div>
                     <div class="rent-view">
                         <h1>Rent</h1>
                         <div class="text-center">
                             Price: ##<br>
-                            Qty: <select ng-model="qty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="qty=1"></select>
-                            <input type="submit" style="width:100%" value="Add to cart" ng-click="rent()">
+                            Qty: <select ng-model="rentQty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="rentQty=1"></select>
+                            <input type="submit" style="width:100%" value="Add to cart" ng-click="addToCart(item, rentQty, false)">
                         </div>
                     </div>
                 </div>

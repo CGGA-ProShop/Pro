@@ -110,6 +110,7 @@ app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthSe
     s.isAuthorized = AuthService.isAuthorized;
 
     s.cart = [];
+    s.inventory = [];
 
     s.setCurrentUser = function(user) { s.currentUser = user; };
     s.logout = function() {
@@ -144,9 +145,13 @@ app.controller("buy",["$scope","viewModel", "$http", "$routeParams",function(s, 
         s.searchText = p.category;
     }
 
+    h.get("r/items/").success( function(data){
+        s.inventory = data;
+    });
+
     s.display = function(item) { // Shortens the string nicely to fit a certain length
         var display = item.name;
-        var maxLength = 50;
+        var maxLength = 40;
         if(item.name.length > maxLength) {
             display = "";
             var split = item.name.split(" ");
@@ -159,6 +164,11 @@ app.controller("buy",["$scope","viewModel", "$http", "$routeParams",function(s, 
             display += "...";
         }
         return display;
+    };
+
+    s.displayPrice = function(item) {
+        var price = item.price;
+        return (parseInt(price)).toFixed(2);
     };
 
     s.getInventory = function(text) {
@@ -182,40 +192,6 @@ app.controller("buy",["$scope","viewModel", "$http", "$routeParams",function(s, 
     };
 
     s.categories = [{name:"Clubs",members:[{name:"Iron",category:"Clubs"},{name:"Putters",Category:"Clubs"}]}];
-    s.inventory = [{
-        name:"Golf Club",
-        price:10
-    },{
-        name:"Shirt this is a really long item name, it just keeps going and going and going",
-        price:10
-    },{
-        name:"Shirt",
-        price:10
-    },{
-        name:"Shirt",
-        price:10
-    },{
-        name:"Shirt",
-        price:10
-    },{
-        name:"Shirt",
-        price:10
-    },{
-        name:"Shirt",
-        price:10
-    },{
-        name:"Shirt this is a really long item name, it just keeps going and going and going",
-        price:10
-    },{
-        name:"Shirt this is a really long item name, it just keeps going and going and going",
-        price:10
-    },{
-        name:"Shirt this is a really long item name, it just keeps going and going and going",
-        price:10
-    },{
-        name:"Shirt this is a really long item name, it just keeps going and going and going",
-        price:10
-    }];
 }]);
 
 app.controller("cart",["$scope", "viewModel", "$location", function(s, m, l){

@@ -1,7 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var settings = require("./server/settings");
-var db = require("./server/db.js");
+
+var auth = require('./server/pages/authentication');
 var inventory = require('./server/pages/items');
 
 var app = express();
@@ -17,35 +18,10 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 // Resource API
-app.post("/login",function(req, res) {
-    console.log("Login attempt.");
-    //req.body { username: '', password: '' }
-
-    var user = "Brandon";
-    var pass = "abc";
-    if(req.body.username.toLowerCase() === user.toLowerCase()) {
-        if(req.body.password === pass) {
-            res.send(200, {id: 1, user: {name: req.body.username, role: USER_ROLES.admin}});
-        } else {
-            res.send(401, {error:"Password does not match."});
-        }
-    } else {
-        res.send(401, {error:"User does not exist."});
-    }
-
-
-    console.log(JSON.stringify({id: 1, user: {name: req.body.username, role: USER_ROLES.admin}}));
-});
-
-app.post("/signUp",function(req, res) {
-    console.log("Sign up attempt.");
-    //req.body { username: '', password: '' }
-    res.send({id: 1, user: {name: req.body.username, role: USER_ROLES.admin}});
-    console.log(JSON.stringify({id: 1, user: {name: req.body.username, role: USER_ROLES.admin}}));
-});
-
-app.get("/r/inventory/",function(req,res){inventory.items(req,res)});
-app.get("/r/inventory/:item",function(req, res){inventory.item(req,res)});
+app.post("/login", function(req, res) {auth.login(req, res)});
+app.post("/signUp", function(req, res) {auth.signUp(req, res)});
+app.get("/r/items/", function(req,res){inventory.items(req, res)});
+app.get("/r/item/:item", function(req, res){inventory.item(req, res, req.params.item)});
 
 // Serves static pages in the public path
 app.use(express.static(__dirname + '/public'));

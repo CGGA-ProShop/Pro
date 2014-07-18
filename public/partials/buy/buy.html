@@ -47,23 +47,23 @@
             <div class="clear"></div>
         </div>
         <div class="items row">
-            <a class="highLight" ng-repeat="item in inventory" href="#/item/{{item.name}}" ng-show="view.stack">
+            <a class="highLight" ng-repeat="item in inventory" href="#/item/{{item._id}}" ng-show="view.stack">
                 <div class="item">
                     <div class="thumbnail">
                         <img src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
                         <div class="caption">
                             <div class="name">{{display(item)}}</div>
-                            <div class="price">${{item.price.toPrecision(2)}}</div>
+                            <div class="price">$ {{displayPrice(item)}}</div>
                         </div>
                     </div>
                 </div>
             </a>
-            <a ng-repeat="item in inventory" href="#/item/{{item.name}}" ng-show="view.list">
+            <a ng-repeat="item in inventory" href="#/item/{{item._id}}" ng-show="view.list">
                 <div class="media">
                     <img class="media-object pull-left" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver" width="64px">
                     <div class="media-body">
                         <h4 class="media-heading">{{item.name}}</h4>
-                        Price: {{item.price}}<br>
+                        $ {{displayPrice(item)}}<br>
                         Description: {{item.description}}
                     </div>
                 </div>

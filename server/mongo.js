@@ -2,7 +2,7 @@ var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectID;
 
-var connString = "mongodb://proAdmin:duklle@couts.me/ProShop";
+var connString = require("./connectionString");
 
 var mydb;
 

@@ -19,32 +19,61 @@
     h1 {
         margin: 0 0 15px 0;
     }
+    .error {
+        border: 1px solid red;
+    }
+    .error-box {
+        border: 1px solid red;
+        color: red;
+        background: #fDD;
+        padding: 5px;
+        margin-bottom: 15px;
+    }
 
 </style>
 <div class="sign-up-panel container">
     <h1>Sign up</h1>
     <form ng-submit="signUp(credentials)" novalidate>
+        <div ng-if="error.error" class="error-box">{{error.error}}</div>
         <table align="center">
             <tr>
                 <td class="text-right" width="50%"><label for="username">Username:</label></td>
                 <td class="text-left"><input id="username" type="text" ng-model="credentials.username"></td>
             </tr>
             <tr>
-                <td class="text-right"><label for="password">Password:</label></td>
-                <td class="text-left"><input id="password" type="password" ng-model="credentials.password"></td>
+                <td class="text-right">
+                    <label for="password">Password:</label>
+                </td>
+                <td class="text-left">
+                    <input id="password" type="password"
+                           ng-class="{error: error.password}"
+                           ng-model="credentials.password"
+                           ng-change="match()">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    <label for="confirm">Confirm password:</label>
+                </td>
+                <td class="text-left">
+                    <input id="confirm" type="password"
+                           ng-class="{error:error.confirm}"
+                           ng-model="credentials.confirm"
+                           ng-change="match()">
+                </td>
             </tr>
             <tr>
                 <td class="text-right"><label for="email">Email:</label></td>
                 <td class="text-left"><input id="email" type="text" ng-model="credentials.email"></td>
             </tr>
-            <tr>
+<!--            <tr>
                 <td colspan="2">
                     <label>
                         I agree to the <a href="#/terms">terms</a> and conditions:&nbsp;
                         <input type="checkbox">
                     </label>
                 </td>
-            </tr>
+            </tr>-->
             <tr><td colspan="2" class="center"><input type="submit" value="Sign Up"></td></tr>
         </table>
     </form>

@@ -11,7 +11,7 @@ db.ObjectId = ObjectId;
 db.connect = function (callback) {
     if(mydb === undefined){
         MongoClient.connect(connString, function(err, returnDB){
-            if(err) {return callback(err)}
+            if(err) {return console.log(err); }
             mydb = returnDB;
             callback(null, returnDB);
         });

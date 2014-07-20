@@ -30,9 +30,9 @@ app.service('Session', ["$cookies",function (cookie) {
         role:    (cookie.role)?    cookie.role:    this.userRole
     };};
     this.destroy = function () {
-        this.id       = null; delete cookie["session"];
-        this.userId   = null; delete cookie["user"];
-        this.userRole = null; delete cookie["role"];
+        this.id       = null; cookie.session = null; delete cookie["session"];
+        this.userId   = null; cookie.user    = null; delete cookie["user"];
+        this.userRole = null; cookie.role    = null; delete cookie["role"];
     };
     return this;
 }]);
@@ -49,6 +49,7 @@ app.factory('AuthService', ["$http", "Session", "$cookies", function ($http, Ses
     authService.login = function (credentials) {
         return $http.post('/login', credentials)
             .then(function (res) {
+                console.log(res);
                 if(res.hasOwnProperty('data'))
                     Session.create(res.data.id, res.data.user.name, res.data.user.role);
                 return Session.read();
@@ -61,6 +62,7 @@ app.factory('AuthService', ["$http", "Session", "$cookies", function ($http, Ses
     authService.signUp = function (credentials) {
         return $http.post('/signUp', credentials)
             .then(function (res) {
+                console.log(res);
                 if(res.hasOwnProperty('data'))
                     Session.create(res.data.id, res.data.user.name, res.data.user.role);
                 return Session.read();

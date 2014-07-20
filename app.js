@@ -7,19 +7,14 @@ var inventory = require('./server/pages/items');
 
 var app = express();
 
-var USER_ROLES = {
-    all: '*',
-    admin: 'admin',
-    editor: 'editor',
-    guest: 'guest'
-};
-
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 // Resource API
 app.post("/login", function(req, res) {auth.login(req, res)});
 app.post("/signUp", function(req, res) {auth.signUp(req, res)});
+app.post("/cart", function(req, res) {inventory.cartAdd(req, res)});
+app.get("/r/cart/", function(req, res) {inventory.cart(req, res)});
 app.get("/r/items/", function(req,res){inventory.items(req, res)});
 app.get("/r/item/:item", function(req, res){inventory.item(req, res, req.params.item)});
 

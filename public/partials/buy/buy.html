@@ -2,6 +2,15 @@
     footer {
         width: 100%;
     }
+    a.condensed {
+        color: black;
+        text-decoration: none;
+        padding: 5px;
+        border-top: 1px solid lightgray;
+    }
+    a.condensed:hover {
+        color: black;
+    }
 </style>
 <div class="content">
     <div class="search">
@@ -50,7 +59,7 @@
             <a class="highLight" ng-repeat="item in inventory" href="#/item/{{item._id}}" ng-show="view.stack">
                 <div class="item">
                     <div class="thumbnail">
-                        <img src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver">
+                        <img src="images/items/{{item.src}}" alt="Pro tour driver">
                         <div class="caption">
                             <div class="name">{{display(item)}}</div>
                             <div class="price">$ {{displayPrice(item)}}</div>
@@ -58,9 +67,9 @@
                     </div>
                 </div>
             </a>
-            <a ng-repeat="item in inventory" href="#/item/{{item._id}}" ng-show="view.list">
+            <a class="condensed" ng-repeat="item in inventory" href="#/item/{{item._id}}" ng-show="view.list">
                 <div class="media">
-                    <img class="media-object pull-left" src="images/items/tourpro_driver_large.jpg" alt="Pro tour driver" width="64px">
+                    <img class="media-object pull-left" src="images/items/{{item.src}}" alt="Pro tour driver" width="64px">
                     <div class="media-body">
                         <h4 class="media-heading">{{item.name}}</h4>
                         $ {{displayPrice(item)}}<br>

@@ -88,10 +88,12 @@ app.factory("settings",[function(){
 }]);
 
 
-app.factory("viewModel",[function(){
+app.factory("viewModel",["$location", "$anchorScroll",function(l, a){
     return {
         active: {},
         setActive: function(list, active) {
+            l.hash("top");
+            a();
             angular.forEach(list, function (page, key) {
                 list[key] = false;
             });
@@ -124,14 +126,31 @@ app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthSe
 app.controller("buyItem",["$scope","viewModel","$http","$location","$routeParams",function(s, m, h, l, params) {
     m.setActive(m.active, "buy");
     s.m = m;
-    s.item = {name:"A shirt", price: "10.00"};
+    log(params.id);
+    h.get("/r/item/"+params.id).success(function(data){
+        log(data);
+        s.item = data;
+    }).error(function(data){});
 
+    s.discountPrice = function(item) {
+        return (parseFloat(item.price) *.75).toFixed(2);
+    };
+    s.rentPrice = function(item) {
+        return (parseFloat(item.price)*.1).toFixed(2);
+    };
     s.addToCart = function(item, qty, buyOrRent) {
         log("Adding to cart: "+item.name+" Qty: "+qty);
         var cartItem = angular.copy(item);
+        cartItem.user = s.currentUser;
         cartItem.qty = qty;
         cartItem.buy = buyOrRent;
+        var holder = {item: cartItem};
         s.cart.push(cartItem);
+        h.post("cart/", holder).success(function(data){
+
+        }).error(function(data){
+
+        });
         log(cartItem);
         l.path("/cart");
     };
@@ -250,8 +269,22 @@ app.controller("signUp",["$scope", "viewModel", "$rootScope", "$location", "AUTH
     m.setActive(m.active);
 
     s.change = function(){ s.error = {}; };
+    s.match = function(){
+        if( s.credentials.password &&
+            s.credentials.confirm &&
+            s.credentials.password != "" &&
+            s.credentials.confirm != "" &&
+            s.credentials.password != s.credentials.confirm){
+            s.error.error = "The passwords do not match.";
+            s.error.password = true;
+            s.error.confirm = true;
+        } else {
+            s.error.error = "";
+            s.error.password = false;
+            s.error.confirm = false;
+        }
+    };
     s.signUp = function(credentials) {
-        alert("Hey man! You want to sign up! That's cool. This isn't working just yet though- Sorry about that.");
         Auth.signUp(credentials).then(function(user) {
             s.setCurrentUser(user); // r.$broadcast(AUTH_EVENTS.loginSuccess);
             l.path("/home");

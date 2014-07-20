@@ -24,6 +24,7 @@
     <script src="controllers/auth.js"></script>
 </head>
 <body ng-controller="main">
+    <div id="top" style="height: 1px;"></div>
     <div>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
@@ -71,8 +72,9 @@
         </nav>
         <div class="pg-wrap">
 			<div class="pg-view" ng-view></div>
-            <div class="clear"></div>
+            <div class="clearfix pg-view-after"></div>
         </div>
+        <div style="height: 65px"></div>
         <footer>
             <table>
                 <tr>

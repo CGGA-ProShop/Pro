@@ -1,14 +1,29 @@
 <style>
-    .option-view {
-        background: rgb(201, 213, 193);
-
+    .container {
+        padding-top: 15px;
     }
-    .rent-view {
+    .cart-adder {
+        padding: 15px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    .cart-adder input[type="submit"] {
         margin-top: 15px;
-        background: rgb(173, 193, 237);
+    }
+    .price-table td {
+        padding: 0 5px;
+    }
+    .price {
+        font-size: 1.2em;
+        color: darkred;
+    }
+    .heads {
+        text-align: right;
+        color: grey;
     }
 
-    h1 {
+    h3 {
         margin: 0;
     }
     .qty {
@@ -17,6 +32,30 @@
     .col {
         float: left;
     }
+    .option-holder {
+        margin-top: 5px;
+    }
+    .option {
+        display: inline-block;
+    }
+    .option label{
+        padding: 5px;
+        color: gray;
+        border: 1px solid lightgray;
+    }
+    .option input {
+        display: none;
+    }
+    .option input[type="radio"]:checked + label {
+        background: #ffdb99;
+        color: orange;
+        border: 1px solid orange;
+    }
+    .list-price {
+        color: gray;
+        text-decoration:line-through
+    }
+
 </style>
 
 
@@ -24,33 +63,68 @@
     <div>
         <form>
             <div class="row">
-                <div class="col" style="width: 33.33333333%; padding-right: 15px;">
-                    <img src="images/items/tourpro_driver_large.jpg" width="100%">
+                <div class="col" style="width: 25%; padding-right: 15px;">
+                    <img src="images/items/{{item.src}}" width="100%">
                 </div>
-                <div class="col" style="width: 41.66666667%; padding-right: 15px;">
+                <div class="col" style="width: 50%; padding-right: 15px;">
                     <div class="option-view">
-                        <h1>Name</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <div style="font-size:1.8em;">{{item.brand}} {{item.name}}</div>
+                        <div style="color: green; font-size: 1.2em;">In Stock</div>
                         <div>
-                            options
+                            <table class="price-table">
+                                <tr>
+                                    <td class="heads">List Price:</td>
+                                    <td style="font-size:1.2em;">
+                                        <span class="list-price">${{item.price}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="heads">Price:</td>
+                                    <td style="font-size:1.2em;">
+                                        <span class="price">${{discountPrice(item)}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <div class="cart-adder">
+                            <span style="font-size: 1.8em">Options</span>
+                            <div class="option-holder" ng-if="item.category == 'Clubs'">
+                                <div style="color: gray">Golf Hand:</div>
+                                <div class="option">
+                                    <input id="leftHand" name="hand" type="radio" ng-model="item.golfHand">
+                                    <label for="leftHand">
+                                        Left
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input id="rightHand" name="hand" type="radio" ng-model="item.golfHand">
+                                    <label for="rightHand">
+                                        Right
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col" style="width: 25%;">
-                    <div class="option-view">
-                        <h1>Buy</h1>
+                    <div class="option-view cart-adder">
+                        <h3>Buy</h3>
                         <div class="text-center">
-                            Price: ##<br>
+                            <span style="color: #808080;">List Price:</span>
+                            <span class="list-price">${{item.price}}</span><br>
+                            Price: <span class="price">${{discountPrice(item)}}</span><br>
                             Qty: <select ng-model="buyQty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="buyQty=1"></select>
                             <input type="submit" style="width:100%" value="Add to cart" ng-click="addToCart(item, buyQty, true)">
                         </div>
                     </div>
-                    <div class="rent-view">
-                        <h1>Rent</h1>
+                    <div class="rent-view cart-adder" ng-if="item.category == 'Clubs'">
+                        <h3>Rent</h3>
                         <div class="text-center">
-                            Price: ##<br>
-                            Qty: <select ng-model="rentQty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="rentQty=1"></select>
-                            <input type="submit" style="width:100%" value="Add to cart" ng-click="addToCart(item, rentQty, false)">
+                            Rent Price: <span class="price">${{rentPrice(item)}}</span><br>
+                            Qty: <select ng-model="rentQty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="rentQty=1"></select><br>
+                            <div style="color: grey;margin-top: 5px;">*Per day basis</div>
+                            <input type="submit" style="width:100%; margin-top: 5px" value="Add to cart" ng-click="addToCart(item, rentQty, false)">
                         </div>
                     </div>
                 </div>

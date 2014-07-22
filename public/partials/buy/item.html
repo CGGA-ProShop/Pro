@@ -39,6 +39,7 @@
         display: inline-block;
     }
     .option label{
+        margin: 5px;
         padding: 5px;
         color: gray;
         border: 1px solid lightgray;
@@ -55,10 +56,7 @@
         color: gray;
         text-decoration:line-through
     }
-
 </style>
-
-
 <div class="container">
     <div>
         <form>
@@ -81,26 +79,134 @@
                                 <tr>
                                     <td class="heads">Price:</td>
                                     <td style="font-size:1.2em;">
-                                        <span class="price">${{discountPrice(item)}}</span>
+                                        <span class="price">${{cart.price(item, 1)}}</span> {{cart.discount(item)}}% off
                                     </td>
                                 </tr>
                             </table>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <div class="cart-adder">
+                        <p>{{item.description}}</p>
+                        <div class="cart-adder" ng-if="item.category == 'Clubs'">
                             <span style="font-size: 1.8em">Options</span>
-                            <div class="option-holder" ng-if="item.category == 'Clubs'">
+                            <div class="option-holder">
                                 <div style="color: gray">Golf Hand:</div>
                                 <div class="option">
-                                    <input id="leftHand" name="hand" type="radio" ng-model="item.golfHand">
+                                    <input id="leftHand" name="hand" type="radio" ng-model="item.option.golfHand" value="Left">
                                     <label for="leftHand">
                                         Left
                                     </label>
                                 </div>
                                 <div class="option">
-                                    <input id="rightHand" name="hand" type="radio" ng-model="item.golfHand">
+                                    <input id="rightHand" name="hand" type="radio" ng-model="item.option.golfHand" value="Right">
                                     <label for="rightHand">
                                         Right
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-adder" ng-if="item.type == 'Shirts'||item.type == 'Outerwear'||item.type == 'Sweaters'">
+                            <span style="font-size: 1.8em">Options</span>
+                            <div class="option-holder">
+                                <div style="color: gray">Shirt Size:</div>
+                                <div class="option">
+                                    <input id="small" name="size" type="radio" ng-model="item.option.size" value="Small">
+                                    <label for="small">
+                                        Small
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input id="medium" name="size" type="radio" ng-model="item.option.size" value="Medium">
+                                    <label for="medium">
+                                        Medium
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input id="large" name="size" type="radio" ng-model="item.option.size" value="Large">
+                                    <label for="large">
+                                        Large
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input id="XL" name="size" type="radio" ng-model="item.option.size" value="Extra Large">
+                                    <label for="XL">
+                                        Extra Large
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input id="XXL" name="size" type="radio" ng-model="item.option.size" value="XXLarge">
+                                    <label for="XXL">
+                                        XXL
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-adder" ng-if="item.category == 'Shoes'">
+                            <span style="font-size: 1.8em">Options</span>
+                            <div class="option-holder">
+                                <div style="color: gray">Shoe Size: {{item.size}}</div>
+                                <div class="option" ng-repeat="i in [7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,14,15,16]">
+                                    <input id="{{i}}" name="shoeSize" type="radio" ng-model="item.option.shoeSize"
+                                           value="{{i}}">
+                                    <label for="{{i}}">
+                                        {{i}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="option-holder">
+                                <div style="color: gray">Shoe Width: {{item.size}}</div>
+                                <div class="option" ng-repeat="i in ['narrow', 'medium', 'wide']">
+                                    <input id="{{i}}" name="shoeWidth" type="radio" ng-model="item.option.shoeWidth"
+                                           value="{{i}}">
+                                    <label for="{{i}}">
+                                        {{i}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-adder" ng-if="item.type == 'Pants'">
+                            <span style="font-size: 1.8em">Options</span>
+                            <div class="option-holder">
+                                <div style="color: gray">Waist:</div>
+                                <div class="option" ng-repeat="i in [28,30,32,34,36,38,40,42,44]">
+                                    <input id="Waist{{i}}" name="waist" type="radio" ng-model="item.option.pantWaist"
+                                           value="{{i}}">
+                                    <label for="Waist{{i}}">
+                                        {{i}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="option-holder">
+                                <div style="color: gray">Length:</div>
+                                <div class="option" ng-repeat="i in [30,32,34,36]">
+                                    <input id="Length{{i}}" name="len" type="radio" ng-model="item.option.pantLen"
+                                           value="{{i}}">
+                                    <label for="Length{{i}}">
+                                        {{i}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-adder" ng-if="item.type == 'Shorts'">
+                            <span style="font-size: 1.8em">Options</span>
+                            <div class="option-holder">
+                                <div style="color: gray">Waist:</div>
+                                <div class="option" ng-repeat="i in [28,30,32,34,36,38,40,42,44]">
+                                    <input id="Waist{{i}}" name="waist" type="radio" ng-model="item.option.shortWaist"
+                                           value="{{i}}">
+                                    <label for="Waist{{i}}">
+                                        {{i}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-adder" ng-if="item.type == 'Belts'">
+                            <span style="font-size: 1.8em">Options</span>
+                            <div class="option-holder">
+                                <div style="color: gray">Length:</div>
+                                <div class="option" ng-repeat="i in [30,32,34,36,38,40,42,44,46]">
+                                    <input id="Waist{{i}}" name="waist" type="radio" ng-model="item.option.beltWaist"
+                                           value="{{i}}">
+                                    <label for="Waist{{i}}">
+                                        {{i}}
                                     </label>
                                 </div>
                             </div>
@@ -113,7 +219,7 @@
                         <div class="text-center">
                             <span style="color: #808080;">List Price:</span>
                             <span class="list-price">${{item.price}}</span><br>
-                            Price: <span class="price">${{discountPrice(item)}}</span><br>
+                            Price: <span class="price">${{cart.price(item, buyQty)}}</span><br>
                             Qty: <select ng-model="buyQty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="buyQty=1"></select>
                             <input type="submit" style="width:100%" value="Add to cart" ng-click="addToCart(item, buyQty, true)">
                         </div>
@@ -121,7 +227,7 @@
                     <div class="rent-view cart-adder" ng-if="item.category == 'Clubs'">
                         <h3>Rent</h3>
                         <div class="text-center">
-                            Rent Price: <span class="price">${{rentPrice(item)}}</span><br>
+                            Rent Price: <span class="price">${{cart.rent(item, rentQty)}}</span><br>
                             Qty: <select ng-model="rentQty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]" ng-init="rentQty=1"></select><br>
                             <div style="color: grey;margin-top: 5px;">*Per day basis</div>
                             <input type="submit" style="width:100%; margin-top: 5px" value="Add to cart" ng-click="addToCart(item, rentQty, false)">

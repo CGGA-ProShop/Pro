@@ -1,34 +1,45 @@
 <style>
-    .submenu {
-        width: 100%;
-        border-collapse: separate;
-    }
-    .submenu td {
-        height: 50px;
-        text-align: center;
-        background: rgb(201, 213, 193);
-        width: 16.6666666666666666665%;
-    }
-    .submenu a {
+    a.condensed {
         color: black;
     }
-    .submenu a:hover {
-        color: #6AA84F;
+    a.condensed:hover {
         text-decoration: none;
     }
+    .side-by-side {
+        width: 50%;
+        padding: 15px;
+    }
+    .flash {
+        visibility: hidden;
+    }
 </style>
+
 <div class="container">
-    <table class="submenu">
-        <tr>
-            <td><a href="#/buy/Clubs">Clubs</a></td>
-            <td><a href="#/buy/Apparel">Apparel</a></td>
-            <td><a href="#/buy/Shoes">Shoes</a></td>
-            <td><a href="#/buy/Balls">Balls</a></td>
-            <td><a href="#/buy/Bags">Bags</a></td>
-            <td><a href="#/buy/Accessories">Accessories</a></td>
-        </tr>
-    </table>
-    <h1>Hot deals</h1>
+    <div style="font-size: 3em;color: red;font-weight:bold" ng-class="{flash:flash}">
+        Hot Deals
+    </div>
     <div class="deals">
+        <div class="side-by-side pull-left" ng-repeat="item in deals | filter: {category: searchText}">
+            <a class="condensed"  href="#/item/{{item._id}}">
+                <div class="media">
+                    <div style="text-align: center">
+                        <img class="" src="images/items/{{item.src}}" alt="Pro tour driver" width="256px">
+                    </div>
+                    <div class="media-body">
+                        <div style="font-size:1.4em">
+                            {{item.brand}} {{item.name}}
+                        </div>
+                        <div>
+                            <span style="text-decoration: line-through;color:grey;font-size:.8em">${{item.price}}</span>
+                            <span style="color: darkred;font-size: 1.2em">${{cart.price(item, 1)}}</span>&nbsp;
+                            <span>{{cart.discount(item)}}% off</span>
+                        </div>
+                        <div>
+                            {{cart.display(item.description, 250)}}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>

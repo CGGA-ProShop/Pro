@@ -1,45 +1,62 @@
 <style>
-    .cart table {
-        width: 100%;
-    }
-
-    .cart table tr td {
-        padding: 5px;
-        border-top: 1px solid lightgray;
-        border-bottom: 1px solid lightgray;
-    }
-
-    .cart td h2 {
-        margin: 0;
-        display: inline;
+    table td{padding: 5px;}
+    .price-table td {
+        padding: 0 5px;
     }
     .name {
         font-size: 1.2em;
         font-weight: bold;
     }
-
     .renting {
         color: #33F;
     }
-
     .buying {
         color: #F33;
     }
-
     .cart {
         padding-bottom: 15px;
     }
-
     .qty {
         width: 65px;
     }
+    .cart-adder {
+        padding: 15px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    .cart-adder input[type="submit"] {
+        margin-top: 15px;
+    }
+    .list-price {
+        color: gray;
+        text-decoration:line-through
+    }
+    .price {
+        font-size: 1.2em;
+        color: darkred;
+    }
+    .discount {
+        margin: 15px;
+        background: green;
+        color: white;
+        padding: 5px;
+    }
+    .option {
+        display: inline-block;
+        margin: 5px;
+        padding: 5px;
+        background: #ffdb99;
+        color: orange;
+        border: 1px solid orange;
+    }
 </style>
 
-<div class="container cart">
+<div class="container">
     <h1>Cart</h1>
     <div class="row">
         <div class="col-xs-9">
-            <table ng-if="cart.length">
+            <table class="cart" ng-if="cart.count()">
                 <thead>
                     <tr>
                         <td colspan="2">&nbsp;</td>
@@ -48,41 +65,94 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in cart">
+                    <tr ng-repeat="item in cart.get()">
                         <td width="64px">
-                            <a href="#/item/{{item.name}}">
-                                <img src="images/items/tourpro_driver_large.jpg" width="64px">
+                            <a href="#/item/{{item._id}}">
+                                <img src="images/items/{{item.src}}" width="64px">
                             </a>
                         </td>
                         <td>
-                            <a href="#/item/{{item.name}}" class="name">{{item.name}}</a>&nbsp;&nbsp;
+                            <a href="#/item/{{item._id}}" class="name">{{item.category}} {{item.name}}</a>&nbsp;&nbsp;
                             <span class="buying" ng-if="item.buy">(buying)</span>
                             <span class="renting" ng-if="!item.buy">(renting)</span>
-                            <br>X in stock
-                            <br>{{item.description}}
-                            <a href="" ng-click="deleteItem(item)">Delete</a>
+                            <div style="color: green; font-size: 1.2em;">In Stock</div>
+                            <table class="price-table">
+                                <tr>
+                                    <td class="heads">List Price:</td>
+                                    <td style="font-size:1.2em;">
+                                        <span class="list-price">${{item.price}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="heads">Price:</td>
+                                    <td style="font-size:1.2em;">
+                                        <span class="price">${{cart.price(item, 1)}}</span><span class="discount">{{cart.discount(item)}}% off</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="option-holder" ng-if="item.option">
+                                <span style="font-size: 1.8em">Options</span>
+                                <div>
+                                    <div class="option" ng-if="item.option.golfHand">
+                                        Hand {{item.option.golfHand}}
+                                    </div>
+                                    <div class="option" ng-if="item.option.size">
+                                        Size {{item.option.size}}
+                                    </div>
+                                    <div class="option" ng-if="item.option.shoeSize">
+                                        Size {{item.option.shoeSize}}
+                                    </div>
+                                    <div class="option" ng-if="item.option.shoeWidth">
+                                        Width {{item.option.shoeWidth}}
+                                    </div>
+                                    <div class="option" ng-if="item.option.pantWaist">
+                                        Waist {{item.option.pantWaist}}
+                                    </div>
+                                    <div class="option" ng-if="item.option.pantLen">
+                                        Length {{item.option.pantLen}}
+                                    </div>
+                                    <div class="option" ng-if="item.option.shortWaist">
+                                        Waist {{item.option.shortWaist}}
+                                    </div>
+                                    <div class="option" ng-if="item.option.beltWaist">
+                                        Length {{item.option.beltWaist}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="" ng-click="cart.deleteItem(item)">Delete</a>
+                            </div>
                         </td>
-                        <td class="text-right">
-                            ${{item.price}}
+                        <td class="text-right" ng-if="item.buy">
+                            <span class="price">${{cart.price(item, item.qty)}}</span>
+                        </td>
+                        <td class="text-right" ng-if="!item.buy">
+                            ${{cart.rent(item, item.qty)}}
                         </td>
                         <td>
-                            <select ng-model="item.qty" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]"></select>
+                            <select ng-model="item.qty" ng-change="cart.updateItem(item)" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]"></select>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td class="text-right" colspan="5">SubTotal ({{numItems()}} Items): $ {{total()}}</td>
+                        <td class="text-right" colspan="5">SubTotal ({{cart.count()}} Item<span ng-if="cart.count()>1">s</span>): ${{cart.total()}}</td>
                     </tr>
                 </tfoot>
             </table>
-            <span ng-if="!cart.length">
+            <span ng-if="!cart.count()">
                 <h2>No items in your cart.</h2><span> (You should find some. <a href="#/buy">click here.</a>)</span>
             </span>
         </div>
         <div class="col-xs-3">
-            <div style="border:1px solid lightgray" ng-if="cart.length">
-                <b>Total (# item(s)): $ {{total()}}</b>
+            <div class="cart-adder" ng-if="cart.count()">
+                <b>
+                    Total: ${{cart.total()}}<br>
+                    ({{cart.count()}} item<span ng-if="cart.count()>1">s</span>)
+                </b>
+                <div style="margin-top: 15px">
+                    Free shipping anywhere in the continental US
+                </div>
                 <div>
                     <input type="submit" style="width:100%" value="Check Out">
                 </div>

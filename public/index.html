@@ -22,6 +22,34 @@
     <script src="components/angular-cookies/angular-cookies.js"></script>
     <script src="controllers/main.js"></script>
     <script src="controllers/auth.js"></script>
+
+    <style>
+        body {
+            background: url('images/ThaiGolfCourse.JPG') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        .submenu {
+            margin-top: 50px;
+            width: 100%;
+            border-collapse: separate;
+        }
+        .submenu td {
+            height: 50px;
+            text-align: center;
+            background: rgb(201, 213, 193);
+            width: 16.6666666666666666665%;
+        }
+        .submenu a {
+            color: black;
+        }
+        .submenu a:hover {
+            color: #6AA84F;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body ng-controller="main">
     <div id="top" style="height: 1px;"></div>
@@ -56,7 +84,8 @@
                             <a href="#/signUp">Sign Up</a></span>
                         </li>
                         <li ng-class="{active:m.active.cart}"><a href="#/cart">
-                            <b class="glyphicon glyphicon-shopping-cart"></b> <span class="badge">{{cart.length}}</span></a>
+                            <b class="glyphicon glyphicon-shopping-cart"></b>
+                            <span class="badge">{{cart.count()}}</span></a>
                         </li>
                         <li ng-if="currentUser" class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
@@ -70,8 +99,18 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        <table class="submenu">
+            <tr>
+                <td><a href="#/buy/Clubs">Clubs</a></td>
+                <td><a href="#/buy/Apparel">Apparel</a></td>
+                <td><a href="#/buy/Shoes">Shoes</a></td>
+                <td><a href="#/buy/Balls">Balls</a></td>
+                <td><a href="#/buy/Bags">Bags</a></td>
+                <td><a href="#/buy/Accessories">Accessories</a></td>
+            </tr>
+        </table>
         <div class="pg-wrap">
-			<div class="pg-view" ng-view></div>
+            <div class="pg-view" ng-view></div>
             <div class="clearfix pg-view-after"></div>
         </div>
         <div style="height: 65px"></div>
@@ -87,19 +126,21 @@
                             <div style="font-size:1.2em;font-weight: bold;">Copyright</div>
                         </div>
                     </td>
-                    <td class="disclaim">Disclaimer</td>
+                    <td class="disclaim"><a href="#/disclaimer">Disclaimer</a></td>
                     <td class="pluggedIn">
                         <div class="long">Team PluggedIn</div>
                         <div class="short">PluggedIn</div>
                     </td>
                     <td class="ucf">
-                        <div class="long">
-                            <img src="images/logos/pegasus-icon.png" style="vertical-align: bottom;">
-                            <span style="font-weight: bold">&nbsp;UCF</span>
-                        </div>
-                        <div class="short">
-                            <span style="font-weight: bold">UCF</span>
-                        </div>
+                        <a href="http://www.ucf.edu">
+                            <div class="long">
+                                <img src="images/logos/pegasus-icon.png" style="vertical-align: bottom;">
+                                <span style="font-weight: bold">&nbsp;UCF</span>
+                            </div>
+                            <div class="short">
+                                <span style="font-weight: bold">UCF</span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
             </table>

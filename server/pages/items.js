@@ -8,7 +8,7 @@ var pages = {
                 var list = req.body.items.split(',');
             else
                 var list = [];
-            if(list&&list.length&&list[0]!=null&&list[0]!='null')
+            if(list&&list.length && list[0] != null && list[0] != 'null')
                 for(var i = 0; i < list.length; i++) {
                     list[i] = con.ObjectId(list[i]);
                 }

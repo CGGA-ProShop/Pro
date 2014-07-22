@@ -58,6 +58,12 @@ app.config(['$routeProvider',
         }).when('/account', {
             templateUrl: "partials/account.html",
             controller: "account"
+        }).when('/pluggedIn', {
+            templateUrl: "partials/pluggedin.html",
+            controller: "pluggedIn"
+        }).when('/checkout', {
+            templateUrl: "partials/checkout.html",
+            controller: "checkout"
         }).when('/error',{
             templateUrl: "partials/404.html",
             controller: "error"
@@ -102,6 +108,7 @@ app.factory("viewModel",["$location", "$anchorScroll",function(l, a){
                 list[key] = false;
             });
             list[active] = true;
+            window.scrollTo(0,0);
         }
     };
 }]);
@@ -118,6 +125,7 @@ app.factory("cart",["$http", "AuthService", "$cookies", function(h, a, c){
         }, add: function (item, qty, buyOrRent) {
             console.log("Adding to cart: " + item.name + " Qty: " + qty);
             var cartItem = angular.copy(item);
+            cartItem.itemId = cartItem._id;
             cartItem.qty = qty;
             cartItem.buy = buyOrRent;
             cartItem.user = a.logged();
@@ -212,7 +220,7 @@ app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthSe
     s.types = [];
     s.loading = true;
 
-    //c.cartId = "";
+    // c.cartId = "";
 
     if(c.cartId){
         console.log(c.cartId);
@@ -226,7 +234,6 @@ app.controller("main",["$scope", "viewModel", "$location", "USER_ROLES", "AuthSe
         s.inventory = data;
         s.loading = false;
     });
-
 
     h.get("/r/categories/").success( function(data){
         s.types = data;
@@ -295,8 +302,9 @@ app.controller("cart",["$scope", "viewModel", "$location", "cart", function(s, m
     m.setActive(m.active, "cart");
     s.m = m;
     s.checkOut = function() {
-        l.path("/shipping");
+        l.path("/checkout");
     };
+
     s.deleteItem = function(item) {
         s.cart.splice(s.cart.indexOf(item), 1);
     };
@@ -365,4 +373,266 @@ app.controller("error",["$scope","viewModel", function(s, m) {
 app.controller("account",["$scope","viewModel",function(s, m){
     s.m = m;
     m.setActive(m.active);
+}]);
+
+app.controller("checkout",["$scope", "viewModel", "$location","cart", "$cookies",function(s, m, l, cart, c){
+    s.m = m;
+    m.setActive(m.active);
+
+    s.checkOut = function() {
+        alert('That\'s as far as you go. Thank you for trying our website.');
+        l.path("/home");
+        cart.items = [];
+        c.cartId = "";
+    };
+
+    s.states = [
+        {
+            "name": "Alabama",
+            "abbreviation": "AL"
+        },
+        {
+            "name": "Alaska",
+            "abbreviation": "AK"
+        },
+        {
+            "name": "American Samoa",
+            "abbreviation": "AS"
+        },
+        {
+            "name": "Arizona",
+            "abbreviation": "AZ"
+        },
+        {
+            "name": "Arkansas",
+            "abbreviation": "AR"
+        },
+        {
+            "name": "California",
+            "abbreviation": "CA"
+        },
+        {
+            "name": "Colorado",
+            "abbreviation": "CO"
+        },
+        {
+            "name": "Connecticut",
+            "abbreviation": "CT"
+        },
+        {
+            "name": "Delaware",
+            "abbreviation": "DE"
+        },
+        {
+            "name": "District Of Columbia",
+            "abbreviation": "DC"
+        },
+        {
+            "name": "Federated States Of Micronesia",
+            "abbreviation": "FM"
+        },
+        {
+            "name": "Florida",
+            "abbreviation": "FL"
+        },
+        {
+            "name": "Georgia",
+            "abbreviation": "GA"
+        },
+        {
+            "name": "Guam",
+            "abbreviation": "GU"
+        },
+        {
+            "name": "Hawaii",
+            "abbreviation": "HI"
+        },
+        {
+            "name": "Idaho",
+            "abbreviation": "ID"
+        },
+        {
+            "name": "Illinois",
+            "abbreviation": "IL"
+        },
+        {
+            "name": "Indiana",
+            "abbreviation": "IN"
+        },
+        {
+            "name": "Iowa",
+            "abbreviation": "IA"
+        },
+        {
+            "name": "Kansas",
+            "abbreviation": "KS"
+        },
+        {
+            "name": "Kentucky",
+            "abbreviation": "KY"
+        },
+        {
+            "name": "Louisiana",
+            "abbreviation": "LA"
+        },
+        {
+            "name": "Maine",
+            "abbreviation": "ME"
+        },
+        {
+            "name": "Marshall Islands",
+            "abbreviation": "MH"
+        },
+        {
+            "name": "Maryland",
+            "abbreviation": "MD"
+        },
+        {
+            "name": "Massachusetts",
+            "abbreviation": "MA"
+        },
+        {
+            "name": "Michigan",
+            "abbreviation": "MI"
+        },
+        {
+            "name": "Minnesota",
+            "abbreviation": "MN"
+        },
+        {
+            "name": "Mississippi",
+            "abbreviation": "MS"
+        },
+        {
+            "name": "Missouri",
+            "abbreviation": "MO"
+        },
+        {
+            "name": "Montana",
+            "abbreviation": "MT"
+        },
+        {
+            "name": "Nebraska",
+            "abbreviation": "NE"
+        },
+        {
+            "name": "Nevada",
+            "abbreviation": "NV"
+        },
+        {
+            "name": "New Hampshire",
+            "abbreviation": "NH"
+        },
+        {
+            "name": "New Jersey",
+            "abbreviation": "NJ"
+        },
+        {
+            "name": "New Mexico",
+            "abbreviation": "NM"
+        },
+        {
+            "name": "New York",
+            "abbreviation": "NY"
+        },
+        {
+            "name": "North Carolina",
+            "abbreviation": "NC"
+        },
+        {
+            "name": "North Dakota",
+            "abbreviation": "ND"
+        },
+        {
+            "name": "Northern Mariana Islands",
+            "abbreviation": "MP"
+        },
+        {
+            "name": "Ohio",
+            "abbreviation": "OH"
+        },
+        {
+            "name": "Oklahoma",
+            "abbreviation": "OK"
+        },
+        {
+            "name": "Oregon",
+            "abbreviation": "OR"
+        },
+        {
+            "name": "Palau",
+            "abbreviation": "PW"
+        },
+        {
+            "name": "Pennsylvania",
+            "abbreviation": "PA"
+        },
+        {
+            "name": "Puerto Rico",
+            "abbreviation": "PR"
+        },
+        {
+            "name": "Rhode Island",
+            "abbreviation": "RI"
+        },
+        {
+            "name": "South Carolina",
+            "abbreviation": "SC"
+        },
+        {
+            "name": "South Dakota",
+            "abbreviation": "SD"
+        },
+        {
+            "name": "Tennessee",
+            "abbreviation": "TN"
+        },
+        {
+            "name": "Texas",
+            "abbreviation": "TX"
+        },
+        {
+            "name": "Utah",
+            "abbreviation": "UT"
+        },
+        {
+            "name": "Vermont",
+            "abbreviation": "VT"
+        },
+        {
+            "name": "Virgin Islands",
+            "abbreviation": "VI"
+        },
+        {
+            "name": "Virginia",
+            "abbreviation": "VA"
+        },
+        {
+            "name": "Washington",
+            "abbreviation": "WA"
+        },
+        {
+            "name": "West Virginia",
+            "abbreviation": "WV"
+        },
+        {
+            "name": "Wisconsin",
+            "abbreviation": "WI"
+        },
+        {
+            "name": "Wyoming",
+            "abbreviation": "WY"
+        }
+    ];
+
+    s.cardTypes = [{name:"InYourDreams"},{name:"FastCard"},{name:"UberSwipe"}];
+    s.months = [{name:"01"},{name:"02"},{name:"03"},{name:"04"},{name:"05"},{name:"06"},{name:"07"},{name:"08"},{name:"09"},{name:"10"},{name:"11"},{name:"12"}];
+    s.years = [{name:"2014"},{name:"2015"},{name:"2016"},{name:"2017"},{name:"2018"},{name:"2019"},{name:"2020"},{name:"2021"},{name:"2022"},{name:"2023"},{name:"2024"},{name:"2025"},{name:"2026"},{name:"2027"},{name:"2028"},{name:"2029"},{name:"2030"}];
+}]);
+
+app.controller("pluggedIn",["$scope", "viewModel", "$location","cart", "$cookies",function(s, m, l, cart, c) {
+    s.m = m;
+    m.setActive(m.active);
+
+
 }]);

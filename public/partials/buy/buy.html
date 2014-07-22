@@ -78,7 +78,10 @@
                     </div>
                 </div>
             </a>
-            <a class="condensed" ng-repeat="item in inventory | filter: {category: searchText}" href="#/item/{{item._id}}" ng-show="view.list">
+            <a class="condensed" ng-repeat="item in filtered = (inventory
+                                 | filter: {category: searchCategory}
+                                 | filter: {type: searchType}
+                                 | filter: searchText)" href="#/item/{{item._id}}" ng-show="view.list">
                 <div class="media">
                     <img class="media-object pull-left" src="images/items/{{item.src}}" alt="Pro tour driver" width="64px">
                     <div class="media-body">

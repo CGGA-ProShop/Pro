@@ -35,15 +35,17 @@ var pages = {
         var item = req.body.item;
         console.log("updating item");
         console.log(item);
-        item._id = undefined;
         con.connect(function (err, db) {
             var collection = db.collection("cart");
-            collection.find({cartId: con.ObjectId(item.cartId)}).toArray(function(err, data){
-                console.log(data);
-            });
-            collection.update({cartId: con.ObjectId(item.cartId)}, item, function (err, items) {
-                console.log(items);
-            });
+            collection.findAndModify(
+                {cartId: con.ObjectId(item.cartId)},
+                {},
+                {$set:{qty:item.qty}},
+                {},
+                function(err, object) {
+                    if(err){ console.warn(err.message); }
+                }
+            );
         });
     }, categories: function(req, res) {
         res.setHeader('Content-Type', 'application/json');

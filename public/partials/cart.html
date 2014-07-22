@@ -67,12 +67,12 @@
                 <tbody>
                     <tr ng-repeat="item in cart.get()">
                         <td width="64px">
-                            <a href="#/item/{{item._id}}">
+                            <a href="#/item/{{item.itemId}}">
                                 <img src="images/items/{{item.src}}" width="64px">
                             </a>
                         </td>
                         <td>
-                            <a href="#/item/{{item._id}}" class="name">{{item.category}} {{item.name}}</a>&nbsp;&nbsp;
+                            <a href="#/item/{{item.itemId}}" class="name">{{item.category}} {{item.name}}</a>&nbsp;&nbsp;
                             <span class="buying" ng-if="item.buy">(buying)</span>
                             <span class="renting" ng-if="!item.buy">(renting)</span>
                             <div style="color: green; font-size: 1.2em;">In Stock</div>
@@ -154,7 +154,7 @@
                     Free shipping anywhere in the continental US
                 </div>
                 <div>
-                    <input type="submit" style="width:100%" value="Check Out">
+                    <input type="submit" style="width:100%" value="Check Out" ng-click="checkOut()">
                 </div>
             </div>
         </div>

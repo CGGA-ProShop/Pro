@@ -1,0 +1,119 @@
+<style>
+    .divider {
+        display: inline-block;
+        width: 50%;
+    }
+    .shipping {
+        width: 100%;
+    }
+    .shipping td,th {
+        width: 50%;
+        padding: 5px;
+    }
+    .shipping th {
+        text-align: right;
+        vertical-align: middle;
+    }
+    label {
+        margin: 0;
+    }
+    input[type=text] {
+        width: 100%;
+    }
+    select {
+        width: 100%;
+    }
+</style>
+<div class="container">
+    <form>
+        <div style="font-size:1.8em;font-weight:bold;padding-top: 15px">
+            Shipping and Payment
+        </div>
+        <div style="font-size:1.2em;margin:15px">
+            Shipping is included in the price. <span style="color:red">US shipping only.</span>
+        </div>
+        <div class="divider pull-left">
+            <div style="font-size:1.2em;font-weight:bold; padding-left: 15px;padding-bottom: 15px">
+                Shipping Address
+            </div>
+            <table class="shipping">
+                <tr>
+                    <th><label for="name">Name:</label></th>
+                    <td><input id="name" type="text"></td>
+                </tr>
+                <tr>
+                    <th><label for="address">Address:</label></th>
+                    <td><input id="address" type="text"></td>
+                </tr>
+                <tr>
+                    <th><label for="city">City:</label></th>
+                    <td><input id="city" type="text"></td>
+                </tr>
+                <tr>
+                    <th><label for="state">State:</label></th>
+                    <td>
+                        <select id="state" ng-model="state"
+                                ng-options="state.abbreviation as state.name for state in states"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="zip">Zip:</label></th>
+                    <td>
+                        <input id="zip" type="text">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="divider pull-left">
+            <div style="font-size:1.2em;font-weight:bold; padding-left: 15px;padding-bottom: 15px">
+                Credit Card
+            </div>
+            <table class="shipping">
+                <tr>
+                    <th>
+                        <label for="cardType">Card type:</label>
+                    </th>
+                    <td>
+                        <select id="cardType" ng-model="cardType" ng-options="type.name for type in cardTypes"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="cardNumber">Card #:</label>
+                    </th>
+                    <td>
+                        <input id="cardNumber" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="cardNumber">CSC:</label>
+                    </th>
+                    <td>
+                        <input id="cardNumber" type="text" style="width:50px" maxlength="3">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="expire">Expiration:</label>
+                    </th>
+                    <td>
+                        <select id="expire" style="width:auto;" ng-model="card.month" ng-options="month.name for month in months">
+                            <option value=""></option>
+                        </select>
+                        <select id="expire" style="width:auto;" ng-model="card.year" ng-options="year.name for year in years">
+                            <option value=""></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="clear: both"></div>
+        <div style="font-size:.8em;margin:15px">
+            *Rentals are picked up at the ProShop, and are priced for one day use. Keeping the club(s) will increase the rent cost daily up to the cost of item.
+        </div>
+        <div style="text-align: right;margin:15px 0">
+            <input type="submit" value="Purchase and Ship" ng-click="checkOut()">
+        </div>
+    </form>
+</div>

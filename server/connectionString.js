@@ -1,1 +1,1 @@
-module.exports = "mongodb://proAdmin:duklle@couts.me/ProShop";
+module.exports = "mongodb://localhost/ProShop";

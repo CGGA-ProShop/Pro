@@ -1,0 +1,1 @@
+module.exports = "mongodb://proAdmin:duklle@couts.me/ProShop";

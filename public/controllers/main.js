@@ -160,7 +160,8 @@ app.factory("cart",["$http", "AuthService", "$cookies", function(h, a, c){
         }, total: function() {
             var total = 0;
             angular.forEach(this.items, function (item) {
-                total += price(item.price, item.qty, 1 - item.discount);
+                var discount = (item.buy)? 1 - item.discount : .1;
+                total += price(item.price, item.qty, discount);
             });
             return (total).toFixed(2);
         }, count: function() {

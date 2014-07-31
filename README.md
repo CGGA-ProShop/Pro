@@ -1,6 +1,6 @@
 CGGA-ProShop
 ============
-![alt text](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/pegasus-icon.png "UCF Pegasus") University of Central Florida<br>
+![alt text](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/logos/pegasus-icon.png "UCF Pegasus") University of Central Florida<br>
 Summer class CIS4524 - 2014 Andrew Eisler
 Managing IT Integration
 -------------
@@ -23,15 +23,15 @@ simulated project management:
 
 As well as the final finished product. A web based IT solution to the purposed problems.
 
-![Picture](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/pluggedIn-logo.png)
+![Picture](https://github.com/CGGA-ProShop/Pro/raw/master/public/images/logos/pluggedIn-logo.png)
 
 Project: P.R.O. (Professional Retail Outlet)<br>
 Team: PluggedIn<br>
-Website: http://couts.me/Pro/<br>
+Website: http://couts.me/<br>
 Group members:
-* Steve Carroll
-* Brandon Couts - carbondonuts@hotmail.com
-* Garry Cronyn
+* Steve Carroll - Scarrol@knights.ucf.edu
+* Brandon Couts - carbondonuts@knights.ucf.com
+* Garry Cronyn - Gcronyn@knights.ucf.edu
 
 Executive Summary
 --------------

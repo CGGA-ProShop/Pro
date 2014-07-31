@@ -4,24 +4,23 @@ var pages = {
     cart: function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         con.connect(function(err, db){
+            console.log("Looking up cart");
             if(req.body.items)
                 var list = req.body.items.split(',');
             else
                 var list = [];
-            if(list&&list.length&&list[0]!=null&&list[0]!='null')
+            if(list&&list.length && list[0] != null && list[0] != 'null')
                 for(var i = 0; i < list.length; i++) {
                     list[i] = con.ObjectId(list[i]);
                 }
             db.collection("cart").find({cartId: {$in:list}}).toArray(function(err, items){
-                console.log(items);
                 res.send(items);
             });
         });
     }, cartAdd: function(req, res) {
+        console.log("adding item");
         res.setHeader('Content-Type', 'application/json');
         var item = req.body.item;
-        console.log("adding item");
-
         item._id = undefined;
         item.cartId = con.ObjectId();
         con.connect(function (err, db) {
@@ -31,10 +30,9 @@ var pages = {
             });
         });
     }, cartUpdate: function(req, res) {
+        console.log("updating item");
         res.setHeader('Content-Type', 'application/json');
         var item = req.body.item;
-        console.log("updating item");
-        console.log(item);
         con.connect(function (err, db) {
             var collection = db.collection("cart");
             collection.findAndModify(
@@ -48,6 +46,7 @@ var pages = {
             );
         });
     }, categories: function(req, res) {
+        console.log("Fetching categories");
         res.setHeader('Content-Type', 'application/json');
         con.connect(function(err, db) {
             if(err) {return console.log(err); }
@@ -56,6 +55,7 @@ var pages = {
             });
         });
     }, deals: function(req, res) {
+        console.log("Fetching deals");
         res.setHeader('Content-Type', 'application/json');
         con.connect(function(err, db) {
             if(err) { return console.log(err); }
@@ -65,6 +65,7 @@ var pages = {
                 });
         });
     }, items: function(req, res) {
+        console.log("Fetching items");
         res.setHeader('Content-Type', 'application/json');
         con.connect(function(err, db) {
             if(err) { return console.log(err); }
@@ -74,6 +75,7 @@ var pages = {
                 });
         });
     }, item: function(req, res, id){
+        console.log("Fetching item");
         res.setHeader('Content-Type', 'application/json');
         var objectID = con.ObjectId(id);
         con.connect(function(err, db) {

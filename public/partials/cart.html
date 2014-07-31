@@ -50,6 +50,9 @@
         color: orange;
         border: 1px solid orange;
     }
+    .strike {
+        text-decoration:line-through
+    }
 </style>
 
 <div class="container">
@@ -86,7 +89,13 @@
                                 <tr>
                                     <td class="heads">Price:</td>
                                     <td style="font-size:1.2em;">
-                                        <span class="price">${{cart.price(item, 1)}}</span><span class="discount">{{cart.discount(item)}}% off</span>
+                                        <span class="price" ng-class="{strike:!item.buy}">${{cart.price(item, 1)}}</span><span class="discount">{{cart.discount(item)}}% off</span>
+                                    </td>
+                                </tr>
+                                <tr ng-if="!item.buy">
+                                    <td class="heads">Rent Price:</td>
+                                    <td style="font-size:1.2em;">
+                                        <span class="price" style="color: darkblue">${{cart.rent(item, 1)}}</span>
                                     </td>
                                 </tr>
                             </table>
@@ -123,14 +132,14 @@
                                 <a href="" ng-click="cart.deleteItem(item)">Delete</a>
                             </div>
                         </td>
+                        <td>
+                            <select ng-model="item.qty" ng-change="cart.updateItem(item)" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]"></select>
+                        </td>
                         <td class="text-right" ng-if="item.buy">
                             <span class="price">${{cart.price(item, item.qty)}}</span>
                         </td>
                         <td class="text-right" ng-if="!item.buy">
-                            ${{cart.rent(item, item.qty)}}
-                        </td>
-                        <td>
-                            <select ng-model="item.qty" ng-change="cart.updateItem(item)" ng-options="amount.id as amount.name for amount in [{id:1,name:1},{id:2,name:2},{id:3,name:3},{id:4,name:4},{id:5,name:5},{id:6,name:6},{id:7,name:7},{id:8,name:8},{id:9,name:9},{id:10,name:10}]"></select>
+                            <span class="price" style="color:darkblue">${{cart.rent(item, item.qty)}}</span>
                         </td>
                     </tr>
                 </tbody>
